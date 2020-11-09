@@ -9,7 +9,7 @@ Pour voir le modèle avec RVIZ, soyez dans le répertoire catkin\_ws/src/polyorb
 roslaunch polyorbite_rover display.launch model:=urdf/rover1.urdf.xacro
 ```
 
-#Lancement de gazebo avec le module de contrôle differentiel
+# Lancement de gazebo avec le module de contrôle differentiel
 Pour voir le modèle avec RVIZ, soyez dans le répertoire catkin\_ws/src/polyorbite_rover et lancez la commande:
 
 ```bash
@@ -20,5 +20,5 @@ Vous pourrez alors y contrôler le robot avec l'interface graphique, ou y publis
 ```bash
 rostopic pub /rover_diff_drive_controller/cmd_vel geometry_msgs/Twist -r 8 '[Vitesse_longitudinale, 0.0, 0.0]' '[Vitesse_laterale, 0.0, 0.0]'
 ```
-Avec les valeurs
+Avec les valeurs approprié dans les matrices.
 
