@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<robot name="paul" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="wheel" params="prefix suffix reflect length angle parent">
+
+    <link name="${prefix}_${suffix}_wheel">
+      <visual>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
+        <geometry>
+          <cylinder radius="${wheeldiam/2}" length="0.1"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
+        <geometry>
+          <cylinder radius="${wheeldiam/2}" length="0.1"/>
+        </geometry>
+      </collision>
+      <xacro:default_inertial mass="1"/>
+    </link>
+    <joint name="${prefix}_${suffix}_wheel_joint" type="continuous">
+      <axis xyz="0 1 0" rpy="0 0 0" />
+      <parent link="${prefix}_${parent}"/>
+      <child link="${prefix}_${suffix}_wheel"/>
+      <origin xyz="${length*sin(angle)} 0 ${-length*cos(angle)}" rpy="0 0 0"/>
+    </joint>
+
+    <transmission name="${prefix}_${suffix}_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="${prefix}_${suffix}_wheel_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="${prefix}_${suffix}_wheel_joint">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <gazebo reference="${prefix}_${suffix}_wheel">
+      <mu1 value="200.0"/>
+      <mu2 value="100.0"/>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+
+  </xacro:macro>
+
+  <xacro:macro name="rocker_bogie" params="prefix reflect">
+    <link name="${prefix}_rocker_bogie1">
+      <visual>
+        <geometry>
+          <box size="${rocker_bogie_len} ${rocker_thick1} ${rocker_thick2}"/>
+        </geometry>
+        <origin xyz="${sin(rocker2_angle)*rocker_bogie_len/2} 0 ${-cos(rocker2_angle)*rocker_bogie_len/2}" rpy="0  ${rocker1_angle} 0"/>
+        <material name="green"/>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="${rocker_bogie_len} ${rocker_thick1} ${rocker_thick2}"/>
+        </geometry>
+        <origin xyz="${sin(rocker2_angle)*rocker_bogie_len/2} 0 ${-cos(rocker2_angle)*rocker_bogie_len/2}" rpy="0  ${rocker1_angle} 0"/>
+        <material name="green"/>
+      </collision>
+      <xacro:default_inertial mass="1"/>
+    </link>
+
+    <joint name="rocker_to_${prefix}_rocker_bogie" type="fixed">
+      <parent link="${prefix}_rocker2"/>
+      <child link="${prefix}_rocker_bogie1"/>
+      <origin xyz="${-rocker_len_short*cos(rocker1_angle)} 0 ${-rocker_len_short*sin(rocker1_angle)}" />
+    </joint>
+
+    <link name="${prefix}_rocker_bogie2">
+       <visual>
+        <geometry>
+          <box size="${rocker_bogie_len} ${rocker_thick1} ${rocker_thick2}"/>
+        </geometry>
+        <origin xyz="${-sin(rocker2_angle)*rocker_bogie_len/2} 0 ${-cos(rocker2_angle)*rocker_bogie_len/2}" rpy="0  ${-rocker1_angle} 0"/>
+        <material name="green"/>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="${rocker_bogie_len} ${rocker_thick1} ${rocker_thick2}"/>
+        </geometry>
+        <origin xyz="${-sin(rocker2_angle)*rocker_bogie_len/2} 0 ${-cos(rocker2_angle)*rocker_bogie_len/2}" rpy="0  ${-rocker1_angle} 0"/>
+        <material name="green"/>
+      </collision>
+      <xacro:default_inertial mass="0.5"/>
+    </link>
+
+    <joint name="${prefix}_rocker_bogie_joint" type="fixed">
+      <parent link="${prefix}_rocker_bogie1"/>
+      <child link="${prefix}_rocker_bogie2"/>
+      <origin xyz="0 0 0" />
+    </joint>
+    
+    <xacro:wheel prefix="${prefix}" suffix="back" reflect="-1" length="${rocker_bogie_len}" angle="${-rocker1_angle}" parent="rocker_bogie2"/>
+    <xacro:wheel prefix="${prefix}" suffix="middle" reflect="-1" length="${rocker_bogie_len}" angle="${rocker1_angle}" parent="rocker_bogie1"/>
+  </xacro:macro>
+  
+
+  <xacro:macro name="rocker" params="prefix reflect">
+    <link name="${prefix}_rocker1">
+      <visual>
+        <geometry>
+          <box size="${rocker_len_long+rocker_thick1} ${rocker_thick1} ${rocker_thick2}"/>
+        </geometry>
+        <origin xyz="${sin(rocker1_angle)*rocker_len_long/2} 0 -${cos(rocker1_angle)*rocker_len_long/2}" rpy="0  ${rocker1_angle} 0"/>
+        <material name="green"/>
+      </visual>
+      <collision>
+         <geometry>
+          <box size="${rocker_len_long+rocker_thick1} ${rocker_thick1} ${rocker_thick2}"/>
+        </geometry>
+        <origin xyz="${sin(rocker1_angle)*rocker_len_long/2} 0 -${cos(rocker1_angle)*rocker_len_long/2}" rpy="0  ${rocker1_angle} 0"/>
+      </collision>
+      <xacro:default_inertial mass="0.5"/>
+    </link>
+
+    <joint name="base_to_${prefix}_rocker" type="fixed">
+      <parent link="base_link"/>
+      <child link="${prefix}_rocker1"/>
+      <origin xyz="0 ${reflect*bodywidth/2} 0" />
+    </joint>
+
+    <link name="${prefix}_rocker2">
+       <visual>
+        <geometry>
+          <box size="${rocker_len_short+rocker_thick1} ${rocker_thick1} ${rocker_thick2}"/>
+        </geometry>
+        <origin xyz="${-sin(rocker1_angle)*rocker_len_short/2} 0 -${cos(rocker1_angle)*rocker_len_short/2}" rpy="0  ${-rocker1_angle} 0"/>
+        <material name="green"/>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="${rocker_len_short+rocker_thick1} ${rocker_thick1} ${rocker_thick2}"/>
+        </geometry>
+        <origin xyz="${-sin(rocker1_angle)*rocker_len_short/2} 0 -${cos(rocker1_angle)*rocker_len_short/2}" rpy="0  ${-rocker1_angle} 0"/>
+      </collision>
+      <xacro:default_inertial mass="0.5"/>
+    </link>
+
+    <joint name="${prefix}_rocker_joint" type="fixed">
+      <parent link="${prefix}_rocker1"/>
+      <child link="${prefix}_rocker2"/>
+      <origin xyz="0 0 0" />
+    </joint>
+    <xacro:rocker_bogie prefix="${prefix}" reflect="${reflect}"/>
+    
+    <xacro:wheel prefix="${prefix}" suffix="front" reflect="1" length="${rocker_len_long}" angle="${rocker1_angle}" parent="rocker1"/>
+  </xacro:macro>
+  
+
+
+  <xacro:rocker prefix="right" reflect="-1" />
+  <xacro:rocker prefix="left" reflect="1" />
+
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+    </plugin>
+  </gazebo>
+</robot>
+

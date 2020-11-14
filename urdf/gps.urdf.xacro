@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<robot name="paul" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+ <!-- GPS Tower -->
+  <link name="GPS_tower">
+    <collision>
+      <origin xyz="0 0 0.20" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.03 0.03 0.3"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0.20" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.03 0.03 0.3"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+	 <xacro:default_inertial mass="1"/>
+  </link>
+
+   <joint name="tower_to_base" type="fixed">
+      <parent link="base_link"/>
+      <child link="GPS_tower"/>
+      <origin xyz="${-bodylen*4/10} ${-bodywidth*4/10} 0" />
+   </joint>
+
+ <!-- GPS Beacon -->
+  <link name="GPS_Beacon">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.07 0.07 0.07"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.07 0.07 0.07"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+	 <xacro:default_inertial mass="1"/>
+  </link>
+
+   <joint name="beacon_to_tower" type="fixed">
+      <parent link="GPS_tower"/>
+      <child link="GPS_Beacon"/>
+      <origin xyz="0 0 0.35" />
+   </joint>
+
+<gazebo>
+	<plugin name="gazebo_ros_gps" filename="libhector_gazebo_ros_gps.so">
+		<updateRate>4.0</updateRate>
+		<bodyName>GPS_Beacon</bodyName>
+		<frameId>GPS_Beacon</frameId>
+		<topicName>/gps/fix</topicName>
+		<velocityTopicName>/gps/fix_velocity</velocityTopicName>
+		<referenceLatitude>-30.06022459407145675</referenceLatitude>
+		<referenceLongitude>-51.173913575780311191</referenceLongitude>
+		<referenceHeading>90</referenceHeading>
+		<referenceAltitude>10</referenceAltitude>
+		<offset>0 0 0</offset>
+		<drift>0.001 0.001 0.001</drift>
+		<gaussianNoise>0.05 0.05 0.05</gaussianNoise>
+		<velocityDrift>0.001 0.001 0.001</velocityDrift>
+		<velocityGaussianNoise>0.5 0.5 0.5</velocityGaussianNoise>
+<!--                <drift>0.001 0.001 0.001</drift>-->
+<!--                <gaussianNoise>0.01 0.01 0.01</gaussianNoise>-->
+<!--                <velocityDrift>0 0 0</velocityDrift>-->
+<!--                <velocityGaussianNoise>0.05 0.05 0.05</velocityGaussianNoise>-->
+	</plugin>
+</gazebo>
+
+ <gazebo reference="GPS_Beacon">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+</robot>
