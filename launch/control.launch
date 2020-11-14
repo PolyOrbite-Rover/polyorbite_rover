@@ -1,3 +1,4 @@
+<?xml version="1.0" ?>
 <launch>
   <arg name="model" default="$(find polyorbite_rover)/urdf/rover1.urdf.xacro"/>
   <arg name="rvizconfig" default="$(find polyorbite_rover)/rviz/urdf.rviz" />
@@ -20,6 +21,10 @@
     args="rover_joint_state_controller
           rover_diff_drive_controller
           --shutdown-timeout 3"/>
+          
+  <node pkg="tf2_ros" type="static_transform_publisher" name="left_cam_rotation" args="0 0 0 0.5 -0.5  0.5  -0.5 camera_left_link left_cam_rotated" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="right_cam_rotation" args="0 0 0 0.5 -0.5  0.5  -0.5 camera_right_link right_cam_rotated" />
+
           
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
     <param name="default_topic" value="/rover_diff_drive_controller/cmd_vel"/>

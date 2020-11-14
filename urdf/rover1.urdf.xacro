@@ -21,17 +21,12 @@
   <material name="blue">
     <color rgba="0 0 0.8 1"/>
   </material>
-
   <material name="black">
     <color rgba="0 0 0 1"/>
   </material>
-
-
   <material name="green">
     <color rgba="0 1 0 1"/>
   </material>
-
-
   <material name="white">
     <color rgba="1 1 1 1"/>
   </material>
@@ -217,16 +212,16 @@
   <xacro:rocker prefix="left" reflect="1" />
 
 
-  <joint name="camera_joint" type="fixed">
+  <joint name="camera_base_joint" type="fixed">
     <axis xyz="0 1 0" />
     <origin xyz="${bodylen/2} 0 0" rpy="0 0 0"/>
     <parent link="base_link"/>
-    <child link="camera_link"/>
+    <child link="camera_base_link"/>
   </joint>
 
   
-  <!-- Camera -->
-  <link name="camera_link">
+  <!-- Camera base-->
+  <link name="camera_base_link">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -239,7 +234,7 @@
       <geometry>
     <box size="0.03 0.175 0.033"/>
       </geometry>
-      <material name="red"/>
+      <material name="black"/>
     </visual>
 
     <inertial>
@@ -249,11 +244,51 @@
     </inertial>
   </link>
  
+
+
+  <!-- Camera --> 
+<xacro:macro name="Zedcamera" params="prefix reflect">
+	
+  <joint name="camera_${prefix}_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0.015 ${reflect*0.08} 0" rpy="0 0 0"/>
+    <parent link="camera_base_link"/>
+    <child link="camera_${prefix}_link"/>
+  </joint>
+
+  <link name="camera_${prefix}_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+    <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+    <box size="0.01 0.01 0.01"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <inertial>
+      <mass value="0.166" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+ </xacro:macro>
+  
+  <xacro:Zedcamera prefix="right" reflect="-1" />
+  <xacro:Zedcamera prefix="left" reflect="1" />
+
+ 
   <!-- camera -->
-  <gazebo reference="camera_link">
-    <sensor type="camera" name="camera1">
+  <gazebo reference="camera_left_link">
+    <sensor type="multicamera" name="stereo_camera">
       <update_rate>30.0</update_rate>
-      <camera name="head">
+      <camera name="left">
         <horizontal_fov>1.3962634</horizontal_fov>
         <image>
           <width>800</width>
@@ -266,21 +301,37 @@
         </clip>
         <noise>
           <type>gaussian</type>
-          <!-- Noise is sampled independently per pixel on each frame.
-               That pixel's noise value is added to each of its color
-               channels, which at that point lie in the range [0,1]. -->
           <mean>0.0</mean>
           <stddev>0.007</stddev>
         </noise>
       </camera>
-      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+      <camera name="right">
+        <pose>0 -0.16 0 0 0 0</pose>
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>800</width>
+          <height>800</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>rrbot/camera1</cameraName>
+        <cameraName>stereo</cameraName>
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-        <frameName>camera_link</frameName>
-        <hackBaseline>0.07</hackBaseline>
+        <frameName>left_cam_rotated</frameName>
+        <rightFrameName>right_cam_rotated</rightFrameName>
+        <hackBaseline>0.16</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
         <distortionK3>0.0</distortionK3>
@@ -289,7 +340,6 @@
       </plugin>
     </sensor>
   </gazebo>
-
 
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
