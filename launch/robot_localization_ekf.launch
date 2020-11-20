@@ -1,0 +1,18 @@
+<launch>
+  <node pkg="robot_localization" type="ekf_localization_node" name="robot_localization_ekf" clear_params="true">
+    <rosparam command="load" file="$(find polyorbite_rover)/config/robot_localization_ekf.yaml" />
+
+<rosparam param="imu0_config">[false, false, false,
+                               false, false, true,
+                               false, false, false,
+                               false, false, true,
+                               true, false, false]</rosparam>
+
+
+   <!--  Placeholder for output topic remapping
+    <remap from="odometry/filtered" to=""/>
+    <remap from="accel/filtered" to=""/>
+    -->
+
+  </node>
+</launch>

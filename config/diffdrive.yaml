@@ -29,3 +29,44 @@ angular:
     has_acceleration_limits: true
     max_acceleration       : 6.0   # rad/s^2
 
+/gazebo_ros_control:
+  pid_gains:
+      left_front_wheel_joint:
+          p: 1.0
+          i: 1.0
+          d: 1.0
+
+/gazebo_ros_control:
+  pid_gains:
+      left_middle_wheel_joint:
+          p: 1.0
+          i: 1.0
+          d: 1.0
+
+/gazebo_ros_control:
+  pid_gains:
+      left_back_wheel_joint:
+          p: 1.0
+          i: 1.0
+          d: 1.0
+
+/gazebo_ros_control:
+  pid_gains:
+      right_front_wheel_joint:
+          p: 1.0
+          i: 1.0
+          d: 1.0
+
+/gazebo_ros_control:
+  pid_gains:
+      right_middle_wheel_joint:
+          p: 1.0
+          i: 1.0
+          d: 1.0
+
+/gazebo_ros_control:
+  pid_gains:
+      right_back_wheel_joint:
+          p: 1.0
+          i: 1.0
+          d: 1.0

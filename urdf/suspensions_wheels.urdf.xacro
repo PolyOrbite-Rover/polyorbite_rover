@@ -123,6 +123,30 @@
       <parent link="base_link"/>
       <child link="${prefix}_rocker1"/>
       <origin xyz="0 ${reflect*bodywidth/2} 0" />
+      <!-- <axis xyz="0 1 0" rpy="0 0 0" />
+      joint torsional spring plugin <axis>
+        <limit>
+          <lower>-0.1</lower>
+          <upper>0.1</upper>
+        </limit>
+        <dynamics>
+          <spring_stiffness>2500</spring_stiffness>
+          <spring_reference>0.06</spring_reference>
+          <damping>20.0</damping>
+          <friction>0.75</friction>
+        </dynamics>
+        <use_parent_model_frame>0</use_parent_model_frame>
+      </axis>
+      <physics>
+        <ode>
+          <implicit_spring_damper>1</implicit_spring_damper>
+          <cfm_damping>1</cfm_damping>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+        </ode>
+      </physics> -->
     </joint>
 
     <link name="${prefix}_rocker2">
@@ -158,6 +182,7 @@
   <xacro:rocker prefix="left" reflect="1" />
 
 
+ 
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>/</robotNamespace>
