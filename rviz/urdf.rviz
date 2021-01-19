@@ -206,8 +206,6 @@ Visualization Manager:
           Value: true
         left_rocker_bogie2:
           Value: true
-        map:
-          Value: true
         odom:
           Value: true
         right_back_wheel:
@@ -232,41 +230,38 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        base_link:
-          GPS_tower:
-            GPS_Beacon:
-              {}
-          camera_base_link:
-            camera_left_link:
-              left_cam_rotated:
-                {}
-            camera_right_link:
-              right_cam_rotated:
-                {}
-          left_rocker1:
-            left_front_wheel:
-              {}
-            left_rocker2:
-              left_rocker_bogie1:
-                left_middle_wheel:
-                  {}
-                left_rocker_bogie2:
-                  left_back_wheel:
-                    {}
-          right_rocker1:
-            right_front_wheel:
-              {}
-            right_rocker2:
-              right_rocker_bogie1:
-                right_middle_wheel:
-                  {}
-                right_rocker_bogie2:
-                  right_back_wheel:
-                    {}
-        map:
-          {}
         odom:
-          {}
+          base_link:
+            GPS_tower:
+              GPS_Beacon:
+                {}
+            camera_base_link:
+              camera_left_link:
+                left_cam_rotated:
+                  {}
+              camera_right_link:
+                right_cam_rotated:
+                  {}
+            left_rocker1:
+              left_front_wheel:
+                {}
+              left_rocker2:
+                left_rocker_bogie1:
+                  left_middle_wheel:
+                    {}
+                  left_rocker_bogie2:
+                    left_back_wheel:
+                      {}
+            right_rocker1:
+              right_front_wheel:
+                {}
+              right_rocker2:
+                right_rocker_bogie1:
+                  right_middle_wheel:
+                    {}
+                  right_rocker_bogie2:
+                    right_back_wheel:
+                      {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -301,7 +296,7 @@ Visualization Manager:
       Value: false
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /stereo_camera/left/image_mono
+      Image Topic: /stereo_camera/left/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -325,7 +320,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: map
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:

@@ -5,6 +5,5 @@ base_link_frame: base_link  # Defaults to "base_link" if unspecified
 world_frame: odom           # Defaults to the value of odom_frame if unspecified
 
 
-imu0: /imu
 
-two_d_mode: true
+imu0: /imu/data

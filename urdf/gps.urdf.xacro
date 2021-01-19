@@ -71,6 +71,17 @@
 <!--                <velocityDrift>0 0 0</velocityDrift>-->
 <!--                <velocityGaussianNoise>0.05 0.05 0.05</velocityGaussianNoise>-->
 	</plugin>
+	<!-- Ground truth plugin -->
+	<plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>200.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>ground_truth/state</topicName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <frameName>map</frameName>
+      <xyzOffsets>0 0 0</xyzOffsets>
+      <rpyOffsets>0 0 0</rpyOffsets>
+    </plugin>
 </gazebo>
 
  <gazebo reference="GPS_Beacon">

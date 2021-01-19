@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>polyorbite_rover</name>
-  <version>0.5.1</version>
+  <version>0.0.5</version>
   <description>polyorbite_rover</description>
   <author email="x.ouimet@gmail.com">Xavier Ouimet</author>
   <maintainer email="x.ouimet@gmail.com">Xavier Ouimet</maintainer>
@@ -14,6 +14,8 @@
   <build_depend>image_transport</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>std_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+
 
  <!--<run_depend>controller_manager</run_depend>
 
@@ -30,6 +32,12 @@
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>rviz</run_depend>
   <run_depend>xacro</run_depend>
+  <run_depend>nav_msgs</run_depend>
+
+  <export>
+		<controller_interface plugin="${prefix}/controller_plugins.xml" />
+
+  </export>
 
 </package>
 

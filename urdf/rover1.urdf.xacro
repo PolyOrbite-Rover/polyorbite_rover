@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <robot name="paul" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:property name="bodywidth" value="0.5" />
+  <xacro:property name="bodywidth" value="1" />
   <xacro:property name="bodylen" value="1" />
-  <xacro:property name="bodyhei" value="0.2" />
+  <xacro:property name="bodyhei" value="0.3" />
   <xacro:property name="wheeldiam" value="0.254" />
   <xacro:property name="wheellen" value="0.002" />
   <xacro:property name="leglen" value="0.6" />
@@ -54,17 +54,19 @@
         <box size="${bodylen} ${bodywidth} ${bodyhei}"/>
       </geometry>
     </collision>
-     <xacro:default_inertial mass="30"/>
+     <xacro:default_inertial mass="46"/>
   </link>
 
 <!-- Insert Suspensions and wheels --> 
- <xacro:include filename="$(find polyorbite_rover)/urdf/suspensions_wheels.urdf.xacro"/>
-
+<xacro:include filename="$(find polyorbite_rover)/urdf/suspensions_wheels.urdf.xacro"/>
+<!-- <xacro:include filename="$(find polyorbite_rover)/bash/fileMaker/suspension_wheels.urdf.xacro"/>--> 
 
 <!-- Insert Camera --> 
  <xacro:include filename="$(find polyorbite_rover)/urdf/camera.urdf.xacro"/>
 
 <!-- Insert GPS --> 
  <xacro:include filename="$(find polyorbite_rover)/urdf/gps.urdf.xacro"/>
+
+  
 
 </robot>

@@ -10,7 +10,7 @@
   <arg name="model" default="$(find polyorbite_rover)/urdf/rover1.urdf.xacro"/>
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
-  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+  <include file="$(find polyorbite_rover)/launch/empty_world.launch">
 	<arg name="world_name" value="$(find polyorbite_rover)/config/soccerField.world"/>
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />
@@ -30,4 +30,3 @@
   </node>
 
 </launch>
-

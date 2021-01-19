@@ -79,11 +79,11 @@
     <sensor type="multicamera" name="stereo_camera">
       <update_rate>30.0</update_rate>
       <camera name="left">
-        <horizontal_fov>1.3962634</horizontal_fov>
         <image>
-          <width>800</width>
-          <height>800</height>
+          <width>1280</width>
+          <height>720</height>
           <format>R8G8B8</format>
+          <hfov>110</hfov>
         </image>
         <clip>
           <near>0.02</near>
@@ -97,10 +97,10 @@
       </camera>
       <camera name="right">
         <pose>0 -0.16 0 0 0 0</pose>
-        <horizontal_fov>1.3962634</horizontal_fov>
         <image>
-          <width>800</width>
-          <height>800</height>
+          <width>1280</width>
+          <height>720</height>
+          <hfov>110</hfov>
           <format>R8G8B8</format>
         </image>
         <clip>
@@ -144,7 +144,7 @@
     <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
       <alwaysOn>true</alwaysOn>
       <bodyName>camera_left_link</bodyName>
-      <topicName>imu</topicName>
+      <topicName>imu/data</topicName>
       <serviceName>imu_service</serviceName>
       <gaussianNoise>0.0</gaussianNoise>
       <updateRate>20.0</updateRate>
