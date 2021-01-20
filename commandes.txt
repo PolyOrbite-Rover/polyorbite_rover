@@ -1,4 +1,4 @@
-rostopic pub /planner_goal geometry_msgs/PoseStamped '{header: {stamp: now, frame_id: "map"}, pose: {position: {x: 3.0, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}'
+rostopic pub /planner_goal geometry_msgs/PoseStamped '{header: {stamp: now, frame_id: "map"}, pose: {position: {x: 5.0, y: -2.0, z: 0.0}, orientation: {w: 1.0}}}'
 
 
 rostopic pub /control_6202/command geometry_msgs/Twist '[0.0, 0.0, 0.0]' '[0.0, 0.0, 0.0]'
@@ -42,3 +42,9 @@ ekf_local_filter_node:
     #two_d_mode: true
 
 rostopic info tf display
+
+
+rosbag record -O CompNav_4 /ground_truth/state /odometry/filtered/local
+
+#ff0000
+#0000ff

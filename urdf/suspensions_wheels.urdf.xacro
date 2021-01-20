@@ -7,14 +7,14 @@
       <visual>
         <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
         <geometry>
-          <cylinder radius="${wheeldiam/2}" length="0.1"/>
+          <cylinder radius="${wheeldiam/2}" length="${wheellen}"/>
         </geometry>
         <material name="white"/>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
         <geometry>
-          <cylinder radius="${wheeldiam/2}" length="0.1"/>
+          <cylinder radius="${wheeldiam/2}" length="${wheellen}"/>
         </geometry>
        </collision>
       <xacro:default_inertial mass="1"/>
@@ -36,16 +36,6 @@
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface> 
       </joint>
     </transmission>
-
-    <gazebo reference="${prefix}_${suffix}_wheel">
-	  <mu1 value="100.0"/>
-      <mu2 value="200.0"/>
-      <kp value="1000000.0" />
-      <kd value="100.0" />
-      <!--<maxVel>1.0</maxVel>--> 
-	  <minDepth>0.005</minDepth>
-      <material>Gazebo/Grey</material>
-    </gazebo>
 
 
   </xacro:macro>
@@ -126,7 +116,7 @@
       <parent link="base_link"/>
       <child link="${prefix}_rocker1"/>
       <origin xyz="0 ${reflect*bodywidth/2} 0" />
-      <!-- <axis xyz="0 1 0" rpy="0 0 0" />
+      <axis xyz="0 1 0" rpy="0 0 0" />
       joint torsional spring plugin <axis>
         <limit>
           <lower>-0.1</lower>
@@ -149,7 +139,7 @@
             <erp>0.2</erp>
           </limit>
         </ode>
-      </physics> -->
+      </physics> 
     </joint>
 
     <link name="${prefix}_rocker2">
