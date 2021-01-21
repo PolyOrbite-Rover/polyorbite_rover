@@ -22,3 +22,17 @@ rostopic pub /rover_diff_drive_controller/cmd_vel geometry_msgs/Twist -r 8 '[Vit
 ```
 Avec les valeurs approprié dans les matrices.
 
+# Lancement du contrôle autonome
+Pour activer le module de contrôle autonome, il faut lancer le fichier launch:
+```bash
+roslaunch polyorbite_rover move_base.launch
+```
+
+Ceci prends des ressources assez intenses sur l'ordinateur. L'envoi d'une position à laquelle se diriger sera avec la commande:
+```bash
+rostopic pub /planner_goal geometry_msgs/PoseStamped '{header: {stamp: now, frame_id: "map"}, pose: {position: {x: 5.0, y: -2.0, z: 0.0}, orientation: {w: 1.0}}}'
+```
+
+# Autre
+
+La liste de commandes utiles au développement se trouve sous commandes.txt, on y trouve entre autre des commandes d'analyse de système, d'enregistrement de données et de déboguage.

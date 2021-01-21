@@ -21,6 +21,9 @@ rosrun rqt_graph rqt_graph
 rosrun tf view_frames
 rostopic info tf display
 
+#wtf il se passe quoi?
+roswtf
+
 # Pour enregistrer l'odométrie du robot et les commandes de vitesses (peut prendre d'autres topics en entrée)
 rosbag record -O Autonome  /odometry/filtered/local /rover_diff_drive_controller/cmd_vel
 
