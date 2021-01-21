@@ -2,9 +2,11 @@
 <launch>
   <arg name="model" default="$(find polyorbite_rover)/urdf/rover1.urdf.xacro"/>
   <arg name="rvizconfig" default="$(find polyorbite_rover)/rviz/urdf.rviz" />
+  <arg name="world" default="$(find polyorbite_rover)/worlds/maze2.world" />
 
   <include file="$(find polyorbite_rover)/launch/gazebo.launch">
     <arg name="model" value="$(arg model)" />
+    <arg name="world" value="$(arg world)" />
   </include>
 
   <include file="$(find polyorbite_rover)/launch/robot_localization_ekf.launch">
