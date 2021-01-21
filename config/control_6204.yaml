@@ -1,0 +1,15 @@
+# Publish all joint states -----------------------------------
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50  
+
+
+controller_6204_name:
+  type: controller_6204_ns/Controller_6204
+  joints:
+        - left_front_wheel_joint
+        - left_middle_wheel_joint
+        - left_back_wheel_joint
+        - right_middle_wheel_joint
+        - right_front_wheel_joint
+        - right_back_wheel_joint

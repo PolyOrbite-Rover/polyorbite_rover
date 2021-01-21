@@ -2,49 +2,44 @@
 <launch>
   <arg name="model" default="$(find polyorbite_rover)/urdf/rover1.urdf.xacro"/>
   <arg name="rvizconfig" default="$(find polyorbite_rover)/rviz/urdf.rviz" />
-  <arg name="world" default="$(find polyorbite_rover)/worlds/maze2.world" />
 
-
-  <!-- Launch Gazebo -->
   <include file="$(find polyorbite_rover)/launch/gazebo.launch">
     <arg name="model" value="$(arg model)" />
-    <arg name="world" value="$(arg world)" />
-    <arg name="gui" value="false" />
   </include>
 
+  <!--  <node name="stereo_image_proc" pkg="stereo_image_proc" type="stereo_image_proc" ns="stereo"/> 
 
-  <!-- Système de localisation -->
-  <include file="$(find polyorbite_rover)/launch/robot_localization_ekf.launch">
-  </include>
-
-
-  <!-- RVIZ pour voir le statut du robot -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />-->
   
-  <!-- Contrôleur des roues -->
-  <rosparam command="load"
+  
+  <!--<rosparam command="load"
             file="$(find polyorbite_rover)/config/joints.yaml"
             ns="rover_joint_state_controller" />
   <rosparam command="load"
-            file="$(find urdf_sim_tutorial)/config/diffdrive.yaml"
-            ns="rover_diff_drive_controller" />
-
-
-  <!-- Spawn les contrôleurs dans Gazebo -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner"
-    args="rover_joint_state_controller
-          rover_diff_drive_controller
-          "/>
-  
-  <!-- Contrôleur des roues gui-->
+            file="$(find polyorbite_rover)/config/diffdrive.yaml"
+            ns="rover_diff_drive_controller" /> 
+              
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
     <param name="default_topic" value="/rover_diff_drive_controller/cmd_vel"/>
   </node>
 
+            -->
 
-  <!-- Rotation et transformation des deux caméras -->
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find polyorbite_rover)/config/control_6204.yaml" command="load" /> 
+
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    args="controller_6204_name
+          joint_state_controller"/>
+
+
+
   <node pkg="tf2_ros" type="static_transform_publisher" name="left_cam_rotation" args="0 0 0 0.5 -0.5  0.5  -0.5 camera_left_link left_cam_rotated" />
   <node pkg="tf2_ros" type="static_transform_publisher" name="right_cam_rotation" args="0 0 0 0.5 -0.5  0.5  -0.5 camera_right_link right_cam_rotated" />
 
+  <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+    <param name="default_topic" value="/control_6202/command"/>
+  </node>
 
 </launch>
