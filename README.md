@@ -1,5 +1,6 @@
 # ROS_control
 
+
 Le projet de contrôle du Rover de Polyorbite est en cours de développement. Le modèle du robot se trouve sous urdf/robot1.urdf.xacro.
 
 Pour lancer le projet, assurez-vous d'avoir les librairies complètes ROS Melodic d'installées, ainsi que Gazebo. Il faut aussi avoir clôné le répetoire dans catkin\_ws et y avoir lancé la commande catkin\_make
@@ -23,6 +24,9 @@ rostopic pub /rover_diff_drive_controller/cmd_vel geometry_msgs/Twist -r 8 '[Vit
 Avec les valeurs approprié dans les matrices.
 
 # Lancement du contrôle autonome
+
+Il faut s'assurer d'avoir le système robot_localization fonctionnel, il n'est pas installé de base.
+
 Pour activer le module de contrôle autonome, il faut lancer le fichier launch:
 ```bash
 roslaunch polyorbite_rover move_base.launch

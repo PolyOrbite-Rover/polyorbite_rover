@@ -150,7 +150,6 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(image_suscriber src/image_suscriber.cpp)
 add_executable(odom src/odom.cpp)
-add_executable(control_6202 src/control_6202.cpp)
 
 
 
@@ -167,7 +166,6 @@ add_executable(control_6202 src/control_6202.cpp)
 # Specify libraries to link a library or executable target against
 target_link_libraries(image_suscriber ${OpenCV_LIBS} ${catkin_LIBRARIES})
 target_link_libraries(odom ${catkin_LIBRARIES})
-target_link_libraries(control_6202 ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############
