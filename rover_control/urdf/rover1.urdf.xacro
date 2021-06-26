@@ -58,14 +58,14 @@
   </link>
 
 <!-- Insert Suspensions and wheels --> 
-<xacro:include filename="$(find polyorbite_rover)/urdf/suspensions_wheels.urdf.xacro"/>
-<!-- <xacro:include filename="$(find polyorbite_rover)/bash/fileMaker/suspension_wheels.urdf.xacro"/>--> 
+<xacro:include filename="$(find polyorbite_rover_control)/urdf/suspensions_wheels.urdf.xacro"/>
+<!-- <xacro:include filename="$(find polyorbite_rover_control)/bash/fileMaker/suspension_wheels.urdf.xacro"/>--> 
 
 <!-- Insert Camera --> 
- <xacro:include filename="$(find polyorbite_rover)/urdf/camera.urdf.xacro"/>
+ <xacro:include filename="$(find polyorbite_rover_control)/urdf/camera.urdf.xacro"/>
 
 <!-- Insert GPS --> 
- <xacro:include filename="$(find polyorbite_rover)/urdf/gps.urdf.xacro"/>
+ <xacro:include filename="$(find polyorbite_rover_control)/urdf/gps.urdf.xacro"/>
 
   
 

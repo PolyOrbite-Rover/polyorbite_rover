@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(polyorbite_rover)
+project(polyorbite_rover_control)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -18,6 +18,8 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   nav_msgs
   tf
+  controller_manager
+  hardware_interface
 )
 
 find_package(OpenCV REQUIRED)
@@ -130,9 +132,10 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -150,7 +153,14 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(odom src/odom.cpp)
 
+add_executable(rover_node
+  src/rover_base.cpp
+  src/rover_hardware.cpp
+)
 
+target_link_libraries(rover_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+
+#set_directory_properties(PROPERTIES COMPILE_OPTIONS "-std=c++11")
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -200,7 +210,7 @@ target_link_libraries(odom ${catkin_LIBRARIES})
 # )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
-install(DIRECTORY launch rviz urdf
+install(DIRECTORY launch rviz urdf rover_node
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )

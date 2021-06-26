@@ -1,8 +1,8 @@
 <launch>
 
-  <arg name="model" default="$(find polyorbite_rover)/urdf/rover1.urdf"/>
+  <arg name="model" default="$(find polyorbite_rover_control)/urdf/rover1.urdf"/>
   <arg name="gui" default="true" />
-  <arg name="rvizconfig" default="$(find polyorbite_rover)/rviz/urdf.rviz" />
+  <arg name="rvizconfig" default="$(find polyorbite_rover_control)/rviz/urdf.rviz" />
 
   <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
 

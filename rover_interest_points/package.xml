@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>polyorbite_rover_interest_points</name>
+  <version>0.0.0</version>
+  <description>Interest points are served and persisted here</description>
+
+  <maintainer email="clementgassmannprince@gmail.com">
+    Clément Gassmann-Prince (Thinking-Dragon)
+  </maintainer>
+
+  <license>TODO</license>
+
+  <url type="repository">
+    https://github.com/PolyOrbite-Rover/polyorbite_rover/tree/main/rover_interest_points
+  </url>
+
+  <author email="clementgassmannprince@gmail.com">
+    Clément Gassmann-Prince (Thinking-Dragon)
+  </author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+
+  <export></export>
+</package>

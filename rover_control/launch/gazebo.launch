@@ -7,11 +7,11 @@
   <arg name="gui" default="true"/>
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
-  <arg name="model" default="$(find polyorbite_rover)/urdf/rover1.urdf.xacro"/>
-  <arg name="world" default="$(find polyorbite_rover)/worlds/soccerField.world" />
+  <arg name="model" default="$(find polyorbite_rover_control)/urdf/rover1.urdf.xacro"/>
+  <arg name="world" default="$(find polyorbite_rover_control)/worlds/soccerField.world" />
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
-  <include file="$(find polyorbite_rover)/launch/empty_world.launch">
+  <include file="$(find polyorbite_rover_control)/launch/empty_world.launch">
 	<arg name="world_name" value="$(arg world)"/>
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />

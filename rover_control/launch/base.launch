@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<launch>
+    <node pkg="polyorbite_rover" type="rover_node" name="rover_node">
+        <rosparam subst_value="true">
+            control_frequency: 10.0
+            
+            max_acceleration: 3.0
+            max_velocity: 1.0
+            wheel_diameter: 0.3302
+        </rosparam>
+    </node>
+
+    <include file="$(find polyorbite_rover_control)/launch/control_real.launch" />
+
+    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+        <param name="default_topic" value="/rover_velocity_controller/cmd_vel"/>
+    </node>
+</launch>
