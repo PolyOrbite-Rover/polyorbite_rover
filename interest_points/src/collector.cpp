@@ -8,15 +8,26 @@ Collector::Collector(const ros::NodeHandle& node)
 
 void Collector::initialize()
 {
-    interest_points_subscriber = node.subscribe(
-        "interest_points",
+    interest_points_add_subscriber = node.subscribe(
+        "interest_points/add",
         10,
-        &Collector::onMessageReceived,
+        &Collector::onAddMessageReceived,
+        this
+    );
+    interest_points_update_subscriber = node.subscribe(
+        "interest_points/update",
+        10,
+        &Collector::onUpdateMessageReceived,
         this
     );
 }
 
-void Collector::onMessageReceived(const interest_points::InterestPoint::ConstPtr& message)
+void Collector::onAddMessageReceived(const interest_points::InterestPoint::ConstPtr& message)
+{
+
+}
+
+void Collector::onUpdateMessageReceived(const interest_points::InterestPoint::ConstPtr& message)
 {
     
 }

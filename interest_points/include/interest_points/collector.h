@@ -10,9 +10,11 @@ public:
 
 private:
     ros::NodeHandle node;
-    ros::Subscriber interest_points_subscriber;
+    ros::Subscriber interest_points_add_subscriber;
+    ros::Subscriber interest_points_update_subscriber;
 
     void initialize();
 
-    void onMessageReceived(const interest_points::InterestPoint::ConstPtr& message);
+    void onAddMessageReceived(const interest_points::InterestPoint::ConstPtr& message);
+    void onUpdateMessageReceived(const interest_points::InterestPoint::ConstPtr& message);
 };
