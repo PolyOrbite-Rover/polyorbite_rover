@@ -2,6 +2,7 @@
 
 #include "ros/ros.h"
 #include "interest_points/InterestPoint.h"
+#include "interest_points/persistor.h"
 
 class Collector
 {
@@ -12,6 +13,8 @@ private:
     ros::NodeHandle node;
     ros::Subscriber interest_points_add_subscriber;
     ros::Subscriber interest_points_update_subscriber;
+
+    Persistor persistor;
 
     void initialize();
 

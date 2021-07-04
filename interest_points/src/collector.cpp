@@ -24,10 +24,10 @@ void Collector::initialize()
 
 void Collector::onAddMessageReceived(const interest_points::InterestPoint::ConstPtr& message)
 {
-
+    persistor.addInterestPoint(*message);
 }
 
 void Collector::onUpdateMessageReceived(const interest_points::InterestPoint::ConstPtr& message)
 {
-    
+    persistor.updateInterestPoint(*message);
 }
