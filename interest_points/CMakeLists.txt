@@ -31,7 +31,12 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(collector src/collector_node.cpp src/collector.cpp)
+add_executable(
+  collector
+  src/collector_node.cpp
+  src/collector.cpp
+  src/persistor.cpp
+)
 target_link_libraries(collector ${catkin_LIBRARIES})
 
 install(
