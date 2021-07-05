@@ -1,0 +1,42 @@
+#ifndef HARDWARE_INTERFACE
+#define HARDWARE_INTERFACE
+
+#include <ros/ros.h>
+#include <hardware_interface/robot_hw.h>
+#include <hardware_interface/joint_state_interface.h>
+#include <hardware_interface/joint_command_interface.h>
+#include <std_msgs/Int32MultiArray>
+
+class MyRobot : public hardware_interface::RobotHW
+{
+public:
+  MyRobot(ros::NodeHandle nh, double frequency);
+
+  void readMotorData();
+
+  void writeMotorData(const std_msgs::Int32MultiArray command[16]);
+
+private:
+  ros::NodeHandle nh_;
+
+  // Control interfaces
+  hardware_interface::JointStateInterface joint_state_interface_;
+  hardware_interface::VelocityJointInterface velocity_joint_interface_;
+
+  // Variables for the interface
+  double cmd[6];
+  double pos[6];
+  double vel[6];
+  double eff[6];
+
+  // // Structure for storing rover wheels' information
+  // struct Joint
+  // {
+  //   double position;
+  //   double velocity;
+  //   double effort;
+  //   double command;
+  // } joint[6];
+};
+
+#endif // HARDWARE_INTERFACE ///
