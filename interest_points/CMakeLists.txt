@@ -29,7 +29,10 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  /usr/include/mysql
 )
+
+link_directories(/usr/lib/aarch64-linux-gnu)
 
 add_executable(
   collector
@@ -37,7 +40,7 @@ add_executable(
   src/collector.cpp
   src/persistor.cpp
 )
-target_link_libraries(collector ${catkin_LIBRARIES})
+target_link_libraries(collector ${catkin_LIBRARIES} libmysqlclient.so libpthread.so libz.so libm.so librt.so libatomic.so libssl.so libcrypto.so libdl.so)
 
 install(
   DIRECTORY collector
