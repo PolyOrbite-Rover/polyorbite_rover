@@ -14,6 +14,11 @@ add_message_files(
   InterestPoint.msg
 )
 
+add_service_files(
+  FILES
+  InterestPointsQuery.srv
+)
+
 generate_messages(
   DEPENDENCIES
   std_msgs

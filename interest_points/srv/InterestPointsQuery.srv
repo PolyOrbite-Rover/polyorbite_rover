@@ -1,0 +1,4 @@
+int32 page = 0
+int32 pageSize = -1
+---
+interest_points/InterestPoint[] interestPoints
