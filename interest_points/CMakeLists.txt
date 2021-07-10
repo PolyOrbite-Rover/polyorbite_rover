@@ -41,13 +41,25 @@ link_directories(/usr/lib/aarch64-linux-gnu)
 
 add_executable(
   collector
-  src/collector_node.cpp
-  src/collector.cpp
-  src/persistor.cpp
+  src/collector/collector_node.cpp
+  src/collector/collector.cpp
+  src/collector/persistor.cpp
 )
 target_link_libraries(collector ${catkin_LIBRARIES} libmysqlclient.so libpthread.so libz.so libm.so librt.so libatomic.so libssl.so libcrypto.so libdl.so)
 
 install(
   DIRECTORY collector
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+add_executable(
+  server
+  src/server/server_node.cpp
+  src/server/server.cpp
+)
+target_link_libraries(server ${catkin_LIBRARIES} libmysqlclient.so libpthread.so libz.so libm.so librt.so libatomic.so libssl.so libcrypto.so libdl.so)
+
+install(
+  DIRECTORY server
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )

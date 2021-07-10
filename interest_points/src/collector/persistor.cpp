@@ -57,7 +57,23 @@ void Persistor::updateInterestPoint(const interest_points::InterestPoint& intere
     query(queryTemplate, parameters);
 }
 
-void Persistor::query(const std::string& query, const std::vector<MYSQL_BIND>& parameters)
+void Persistor::getInterestPointsPaged(const int& page, const int& pageSize)
+{
+    
+}
+
+void Persistor::getInterestPoints()
+{
+    query(std::string("SELECT uuid, creationTimestamp, name, data FROM polyorbite_rover.interest_points"));
+
+}
+
+void Persistor::query(const std::string& queryTemplate)
+{
+    query(queryTemplate, {});
+}
+
+void Persistor::query(const std::string& queryTemplate, const std::vector<MYSQL_BIND>& parameters)
 {
     MYSQL_STMT *stmt = mysql_stmt_init(database);
 
@@ -68,7 +84,7 @@ void Persistor::query(const std::string& query, const std::vector<MYSQL_BIND>& p
         exit(1);
     }
 
-    bool preparationFailed = mysql_stmt_prepare(stmt, query.c_str(), query.length());
+    bool preparationFailed = mysql_stmt_prepare(stmt, queryTemplate.c_str(), queryTemplate.length());
     if(preparationFailed)
     {
         ROS_FATAL("Query preparation failed");
@@ -95,6 +111,33 @@ void Persistor::query(const std::string& query, const std::vector<MYSQL_BIND>& p
         ROS_FATAL("Could not close the stms after query");
         exit(1);
     }
+}
+
+void Persistor::fetchQueryResult()
+{
+    MYSQL_RES* resultHandle = mysql_store_result(database);
+    int nbRows = mysql_num_rows(resultHandle);
+    int nbFields = mysql_num_fields(resultHandle);
+
+    std::vector<std::map<std::string, std::string>> result;
+
+    std::vector<std::string> fieldNames;
+
+    MYSQL_FIELD* fields = mysql_fetch_fields(resultHandle);
+
+    for(int i = 0; i < nbFields; ++i)
+    {
+        char* fieldName = fields[i].name;
+        ROS_INFO("Field: %s", fieldName);
+    }
+
+    MYSQL_ROW row;
+    while(row = mysql_fetch_row(resultHandle))
+    {
+
+    }
+
+    mysql_free_result(resultHandle);
 }
 
 void Persistor::writeFile(const std::string& name, const std::string& content)
