@@ -1,2 +1,2 @@
 uint8 value
-sensor_msgs/ImagePtr image
+sensor_msgs/Image image
