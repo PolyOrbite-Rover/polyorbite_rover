@@ -2,6 +2,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include "codes/aruco_code_reading.hpp"
 #include "codes/qr_code_reading.hpp"
+// add include for Code.msg (do catkin_make first...)
 
 #define NODE_NAME    "codes_listener"
 #define ARUCO_TOPIC  "aruco"
@@ -29,13 +30,13 @@ cv_bridge::CvImageConstPtr transformROSImgToCVImg(const sensor_msgs::CompressedI
   return null;
 }
 
-void lookForCodes(const cv_bridge::CvImage camImg)
+void lookForCodes(cv_bridge::CvImageConstPtr cam_img_ptr)
 {
   std_msgs::String msg1;    // TODO : changer ça pour un type de message qui pourrait être équivalent à ArucoResult
   std_msgs::String msg2;
 
-  ArucoResult a = arucoRead(camImg);
-  QRResult q = qrRead(camImg);
+  ArucoResult a = arucoRead(cam_img_ptr);
+  QRResult q = qrRead(cam_img_ptr);
 
   if (a != nullptr) {
     pub_a.publish(a->img_ptr->toImageMsg());
@@ -55,7 +56,7 @@ void frameCallback(const sensor_msgs::CompressedImage::ConstPtr& msg)
 {
   cv_bridge::CvImageConstPtr cv_img_ptr;
   cv_img_ptr = transformROSImgToCVImg(msg);
-  lookForCodes(cv_img_ptr->image);
+  lookForCodes(cv_img_ptr);
 }
 
 /*
@@ -69,8 +70,8 @@ int main(int argc, char **argv)
   ros::init(argc, argv, NODE_NAME);
   ros::NodeHandle n;
   ros::Subscriber sub = n.subscribe(CAMERA_TOPIC, 1000, frameCallback); // subscribes to the Zed camera topic
-  ros::Publisher pub_a = n.advertise<std_msgs::String>(ARUCO_TOPIC, 1000); // publishes Aruco codes in aruco topic
-  ros::Publisher pub_q = n.advertise<std_msgs::String>(QR_TOPIC, 1000); // publishes QR codes in qr topic
+  ros::Publisher pub_a = n.advertise<sensor_msgs::ImagePtr>(ARUCO_TOPIC, 1000); // publishes Aruco codes in aruco topic
+  ros::Publisher pub_q = n.advertise<sensor_msgs::ImagePtr>(QR_TOPIC, 1000); // publishes QR codes in qr topic
   arucoInit();
   qrInit();
   ros::Rate r(RATE);

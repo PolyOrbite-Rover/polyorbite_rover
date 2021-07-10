@@ -9,4 +9,4 @@ struct QRResult {
 
 void qrInit();
 
-QRResult qrRead(cv_bridge::CvImagePtr image);
+QRResult qrRead(cv_bridge::CvImagePtr cv_ptr);
