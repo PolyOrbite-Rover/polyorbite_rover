@@ -7,10 +7,12 @@
 #include <hardware_interface/joint_command_interface.h>
 #include <std_msgs/Int32MultiArray.h>
 
+#define DEFAULT_FREQUENCY 16
+
 class MyRobot : public hardware_interface::RobotHW
 {
 public:
-  MyRobot(ros::NodeHandle nh, double frequency);
+  MyRobot(ros::NodeHandle nh, double frequency = DEFAULT_FREQUENCY);
 
   void readMotorData();
 
