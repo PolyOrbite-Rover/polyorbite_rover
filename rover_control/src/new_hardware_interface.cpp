@@ -2,6 +2,9 @@
 
 MyRobot::MyRobot(ros::NodeHandle nh, double frequency) : nh_(nh)
 {
+  // Create publisher
+  velocity_pub = nh.advertise<std_msgs::Int32MultiArray>("command", 1000);  // https://github.com/dheera/ros-pwm-pca9685
+
   // connect and register the JointStateInterface (hard coded)
   hardware_interface::JointStateHandle state_handle_front_left("FL", &pos[0], &vel[0], &eff[0]);
   joint_state_interface_.registerHandle(state_handle_front_left);
@@ -47,8 +50,6 @@ void MyRobot::writeMotorData(const std_msgs::Int32MultiArray command[16])
   // ros::init(argc, argv, "velocity_pub");  // a tester, pas certain que ca fonctionne d'initialiser une node ROS dans une fonction de classe
   // ros::NodeHandle n;
 
-  // Create the publisher
-  ros::Publisher velocity_pub = nh.advertise<std_msgs::Int32MultiArray>("command", 1000);  // https://github.com/dheera/ros-pwm-pca9685
   ros::Rate loop_rate(10);
 
   // Publish the velocity commands while this node is active

@@ -21,6 +21,9 @@ public:
 private:
   ros::NodeHandle nh_;
 
+  // Publishers
+  ros::Publisher velocity_pub;
+
   // Control interfaces
   hardware_interface::JointStateInterface joint_state_interface_;
   hardware_interface::VelocityJointInterface velocity_joint_interface_;
