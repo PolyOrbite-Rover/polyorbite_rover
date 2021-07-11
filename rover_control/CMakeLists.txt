@@ -130,7 +130,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
 )
@@ -149,8 +149,10 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(odom src/odom.cpp)
-
-
+add_executable(hardware_interface
+  src/hardware_interface_node.cpp
+  src/new_hardware_interface.cpp
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -164,6 +166,7 @@ add_executable(odom src/odom.cpp)
 
 # Specify libraries to link a library or executable target against
 target_link_libraries(odom ${catkin_LIBRARIES})
+target_link_libraries(hardware_interface ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############
