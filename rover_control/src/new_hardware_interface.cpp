@@ -4,7 +4,7 @@ MyRobot::MyRobot(ros::NodeHandle nh, double frequency) : nh_(nh)
 {
   // connect and register the JointStateInterface (hard coded)
   hardware_interface::JointStateHandle state_handle_front_left("FL", &pos[0], &vel[0], &eff[0]);
-  joint_state_interface_.registerHandle(state_handle_front_l);
+  joint_state_interface_.registerHandle(state_handle_front_left);
   hardware_interface::JointStateHandle state_handle_front_right("FR", &pos[1], &vel[1], &eff[1]);
   joint_state_interface_.registerHandle(state_handle_front_right);
   hardware_interface::JointStateHandle state_handle_middle_left("ML", &pos[2], &vel[2], &eff[2]);
