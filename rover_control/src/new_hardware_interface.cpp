@@ -44,25 +44,16 @@ void MyRobot::readMotorData()  // This function connects to the node that will s
   ROS_INFO_STREAM("Received velocity information from Robot!");  // en attente de connaitre a quoi se subscribe
 }
 
-void MyRobot::writeMotorData(const std_msgs::Int32MultiArray command[16])
+void MyRobot::writeMotorData()
 {
-  // // Initialize the "subscriber node"
-  // ros::init(argc, argv, "velocity_pub");  // a tester, pas certain que ca fonctionne d'initialiser une node ROS dans une fonction de classe
-  // ros::NodeHandle n;
-
   ros::Rate loop_rate(10);
 
   // Publish the velocity commands while this node is active
   // Methode interessante: https://answers.ros.org/question/353861/why-my-hardware-interface-cant-get-command-from-controller/
-  while (ros::ok())
-  {
-    velocity_pub.publish(command);
-    ROS_INFO_STREAM("Velocity information sent from Robot!");
-  }
+  
+  std_msgs::Int32MultiArray pwmValues;
+  velocity_pub.publish(pwmValues);
+  ROS_INFO_STREAM("Velocity information sent from Robot!");
 
-  // Add a spinOnce for callbacks (future development)
-  ros::spinOnce();
   loop_rate.sleep();
-
-
 }

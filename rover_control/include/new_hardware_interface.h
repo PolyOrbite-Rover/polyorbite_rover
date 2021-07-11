@@ -16,7 +16,7 @@ public:
 
   void readMotorData();
 
-  void writeMotorData(const std_msgs::Int32MultiArray command[16]);
+  void writeMotorData();
 
 private:
   ros::NodeHandle nh_;
