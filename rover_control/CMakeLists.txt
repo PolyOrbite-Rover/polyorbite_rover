@@ -35,6 +35,7 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 add_executable(odom src/odom.cpp)
@@ -44,7 +45,7 @@ add_executable(hardware_interface
 )
 
 target_link_libraries(odom ${catkin_LIBRARIES})
-target_link_libraries(hardware_interface ${catkin_LIBRARIES})
+target_link_libraries(hardware_interface ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 #############
 ## Install ##
