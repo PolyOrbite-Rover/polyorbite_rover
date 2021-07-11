@@ -15,8 +15,9 @@ public:
   MyRobot(ros::NodeHandle nh, double frequency = DEFAULT_FREQUENCY);
 
   void readMotorData();
-
   void writeMotorData();
+
+  double velocityToPwm(const double& velocity);
 
 private:
   ros::NodeHandle nh_;

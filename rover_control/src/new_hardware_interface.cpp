@@ -41,19 +41,28 @@ MyRobot::MyRobot(ros::NodeHandle nh, double frequency) : nh_(nh)
 void MyRobot::readMotorData()  // This function connects to the node that will subscribe to the correct topic for obtaining the velocity or voltage values
 {
 
-  ROS_INFO_STREAM("Received velocity information from Robot!");  // en attente de connaitre a quoi se subscribe
+  //ROS_INFO_STREAM("Received velocity information from Robot!");  // en attente de connaitre a quoi se subscribe
 }
 
 void MyRobot::writeMotorData()
 {
-  ros::Rate loop_rate(10);
-
   // Publish the velocity commands while this node is active
   // Methode interessante: https://answers.ros.org/question/353861/why-my-hardware-interface-cant-get-command-from-controller/
   
   std_msgs::Int32MultiArray pwmValues;
+  pwmValues.data.push_back(velocityToPwm(vel[0]));
+  pwmValues.data.push_back(velocityToPwm(vel[1]));
+  pwmValues.data.push_back(velocityToPwm(vel[2]));
+  pwmValues.data.push_back(velocityToPwm(vel[3]));
+  pwmValues.data.push_back(velocityToPwm(vel[4]));
+  pwmValues.data.push_back(velocityToPwm(vel[5]));
   velocity_pub.publish(pwmValues);
-  ROS_INFO_STREAM("Velocity information sent from Robot!");
+  ROS_INFO("Velocity: %f", vel[0]);
+  //ROS_INFO_STREAM("Velocity information sent from Robot!");
+}
 
-  loop_rate.sleep();
+
+double MyRobot::velocityToPwm(const double& velocity)
+{
+  return velocity;
 }
