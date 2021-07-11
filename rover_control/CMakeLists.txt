@@ -9,6 +9,8 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   nav_msgs
   tf
+  controller_manager
+  hardware_interface
 )
 
 find_package(OpenCV REQUIRED)
