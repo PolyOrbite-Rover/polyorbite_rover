@@ -2,7 +2,7 @@
 
 Server::Server(const ros::NodeHandle& node)
 {
-
+    initialize();
 }
 
 void Server::initialize()

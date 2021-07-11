@@ -18,8 +18,11 @@ public:
     void addInterestPoint(const interest_points::InterestPoint& interest_point);
     void updateInterestPoint(const interest_points::InterestPoint& interest_point);
 
-    void getInterestPointsPaged(const int& page, const int& pageSize);
-    void getInterestPoints();
+    std::vector<interest_points::InterestPoint>
+    getInterestPointsPaged(const int& page, const int& pageSize);
+    
+    std::vector<interest_points::InterestPoint>
+    getInterestPoints();
 
 private:
     MYSQL* database;

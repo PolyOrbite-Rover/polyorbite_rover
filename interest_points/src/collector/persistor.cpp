@@ -57,15 +57,17 @@ void Persistor::updateInterestPoint(const interest_points::InterestPoint& intere
     query(queryTemplate, parameters);
 }
 
-void Persistor::getInterestPointsPaged(const int& page, const int& pageSize)
+std::vector<interest_points::InterestPoint>
+Persistor::getInterestPointsPaged(const int& page, const int& pageSize)
 {
     
 }
 
-void Persistor::getInterestPoints()
+std::vector<interest_points::InterestPoint>
+Persistor::getInterestPoints()
 {
     query(std::string("SELECT uuid, creationTimestamp, name, data FROM polyorbite_rover.interest_points"));
-
+    fetchQueryResult();
 }
 
 void Persistor::query(const std::string& queryTemplate)
