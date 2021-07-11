@@ -1,8 +1,6 @@
 #include "new_hardware_interface.h"
 
-MyRobot::MyRobot(ros::NodeHandle nh)
-  :
-  nh_(nh)
+MyRobot::MyRobot(ros::NodeHandle nh) : nh_(nh)
 {
   // connect and register the JointStateInterface (hard coded)
   hardware_interface::JointStateHandle state_handle_front_left("FL", &pos[0], &vel[0], &eff[0]);

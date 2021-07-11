@@ -1,4 +1,4 @@
-#include "new_hardware_interface"
+#include "new_hardware_interface.h"
 
 int main(int argc, char **argv)
 {
