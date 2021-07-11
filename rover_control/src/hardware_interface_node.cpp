@@ -1,3 +1,5 @@
+#include "controller_manager/controller_manager.h"
+
 #include "new_hardware_interface.h"
 
 int main(int argc, char **argv)
