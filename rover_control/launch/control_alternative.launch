@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<launch>
+    <node name="motor_controller" pkg="motor_controller" type="motor_controller.py" output="screen" />
+    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+        <param name="default_topic" value="/cmd_vel"/>
+    </node>
+</launch>
