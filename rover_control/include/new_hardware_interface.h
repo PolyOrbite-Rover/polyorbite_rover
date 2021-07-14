@@ -5,19 +5,25 @@
 #include <hardware_interface/robot_hw.h>
 #include <hardware_interface/joint_state_interface.h>
 #include <hardware_interface/joint_command_interface.h>
-#include <std_msgs/Int32MultiArray>
+#include <std_msgs/Int32MultiArray.h>
+
+#define DEFAULT_FREQUENCY 16
 
 class MyRobot : public hardware_interface::RobotHW
 {
 public:
-  MyRobot(ros::NodeHandle nh, double frequency);
+  MyRobot(ros::NodeHandle nh, double frequency = DEFAULT_FREQUENCY);
 
   void readMotorData();
+  void writeMotorData();
 
-  void writeMotorData(const std_msgs::Int32MultiArray command[16]);
+  double velocityToPwm(const double& velocity);
 
 private:
   ros::NodeHandle nh_;
+
+  // Publishers
+  ros::Publisher velocity_pub;
 
   // Control interfaces
   hardware_interface::JointStateInterface joint_state_interface_;
