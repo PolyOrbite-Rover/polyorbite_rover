@@ -19,6 +19,8 @@
   <build_depend>image_transport</build_depend>
   <build_depend>message_generation</build_depend>
 
+  <build_export_depend>message_runtime</build_export_depend>
+
   <exec_depend>diff_drive_controller</exec_depend>
   <exec_depend>joint_state_controller</exec_depend>
   <exec_depend>position_controllers</exec_depend>

@@ -150,6 +150,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(odom src/odom.cpp)
+add_executable(codes src/codes_node.cpp)
 
 
 
@@ -161,10 +162,12 @@ add_executable(odom src/odom.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(codes ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 # Specify libraries to link a library or executable target against
 target_link_libraries(odom ${catkin_LIBRARIES})
+target_link_libraries(codes ${catkin_LIBRARIES})
+target_link_libraries(codes ${OpenCV_LIBS})
 #############
 ## Install ##
 #############

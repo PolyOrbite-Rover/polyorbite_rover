@@ -13,7 +13,7 @@
 void qrInit()
 {
     // QRCodeDetector object
-    decoder = QRCodeDetector::QRCodeDetector();
+    //decoder = cv::QRCodeDetector::QRCodeDetector();      // oops, requires OpenCV4
 }
 
 /*
@@ -21,9 +21,10 @@ void qrInit()
  * Extract QR codes from an image taken with the camera
  * Returns : the value and image of the code detected, or a null struct
  */
-QRResult qrRead(cv_bridge::CvImagePtr cv_ptr)
+QRResult qrRead(cv_bridge::CvImageConstPtr cv_ptr)
 {
     QRResult code;
+    /*
     cv_bridge::CvImagePtr tempImg;
     std::string data;
 
@@ -37,6 +38,9 @@ QRResult qrRead(cv_bridge::CvImagePtr cv_ptr)
         code.img_ptr = tempImg;
         return code;
     }
+    */
     
-    return null;
+    code.value = nullptr;
+    code.img_ptr = NULL;
+    return code;
 }

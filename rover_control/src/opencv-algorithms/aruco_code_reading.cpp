@@ -24,7 +24,7 @@ void arucoInit()
  * Extract aruco codes from an image taken with the camera
  * Returns : the value and image of the code detected, or a null struct
  */
-ArucoResult arucoRead(cv_bridge::CvImagePtr cv_ptr)
+ArucoResult arucoRead(cv_bridge::CvImageConstPtr cv_ptr)
 {
     ArucoResult code;
     cv_bridge::CvImagePtr tempImg;
@@ -42,5 +42,7 @@ ArucoResult arucoRead(cv_bridge::CvImagePtr cv_ptr)
         return code;
     }
 
-    return null;
+    code.value = NULL;
+    code.img_ptr = NULL;
+    return code;
 }
