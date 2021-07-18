@@ -1,7 +1,11 @@
 <?xml version="1.0" ?>
 <launch>
     <node name="motor_controller" pkg="motor_controller" type="motor_controller.py" output="screen" />
-    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
-        <param name="default_topic" value="/cmd_vel"/>
+    <node name="pca9685_node" pkg="pwm_pca9685" type="pca9685_node">
+        <param name="device" value="/dev/i2c-8" />
     </node>
+    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+        <param name="default_topic" value="/rover_diff_drive_controller/cmd_vel"/>
+    </node>
+    <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" />
 </launch>
