@@ -13,6 +13,8 @@ MIDDLE_RIGHT_DIRECTION_PIN = 37
 REAR_LEFT_DIRECTION_PIN    = 35
 REAR_RIGHT_DIRECTION_PIN   = 33
 
+MAX_PWM = 50000 # 65535
+
 def velocityCommandReceived(message):
     wantedLinearVelocity = message.linear.x
     wantedAngularVelocity = message.angular.z
