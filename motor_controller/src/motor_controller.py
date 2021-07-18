@@ -2,6 +2,7 @@
 
 import rospy
 from geometry_msgs.msg import Twist
+from std_msgs.msg import Int32MultiArray
 
 import RPi.GPIO as GPIO
 
@@ -41,6 +42,17 @@ def velocityCommandReceived(message):
 
 def setVelocities(left, right):
     print("Velocities: " + str(left) + ", " + str(right))
+    message = Int32MultiArray()
+    message.data = [
+        getPwmFromVelocity(left),
+        getPwmFromVelocity(right),
+        -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1,
+        -1, -1, -1, -1
+    ]
+
+    pwmPublisher.publish(message)
+    
 
 def setDirections(left, right):
     print("Directions: " + str(left) + ", " + str(right))
@@ -51,6 +63,9 @@ def setDirections(left, right):
     GPIO.output(FRONT_RIGHT_DIRECTION_PIN, right)
     GPIO.output(MIDDLE_RIGHT_DIRECTION_PIN, right)
     GPIO.output(REAR_RIGHT_DIRECTION_PIN, right)
+
+def getPwmFromVelocity(velocity):
+    return velocity * MAX_PWM
 
 def init_gpio():
     GPIO.setwarnings(False)
@@ -67,7 +82,10 @@ def start():
 
     rospy.init_node('motor_controller', anonymous=True)
     
-    rospy.Subscriber('cmd_vel', Twist, velocityCommandReceived)
+    rospy.Subscriber('/rover_diff_drive_controller/cmd_vel', Twist, velocityCommandReceived)
+
+    global pwmPublisher
+    pwmPublisher = rospy.Publisher('command', Int32MultiArray, queue_size = 10)
 
     rospy.spin()
 
