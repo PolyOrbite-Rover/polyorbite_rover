@@ -194,7 +194,7 @@ include_directories(
 
 
 
-catkin_install_python(PROGRAMS src/ina260.py
+catkin_install_python(PROGRAMS src/ina260_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
