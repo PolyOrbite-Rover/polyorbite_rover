@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 
 <launch>
-    <param name="robot_description" command="$(find xacro)/xacro $(find polyorbite_rover_control)/urdf/rover1.urdf.xacro" />
+    <param name="robot_description" command="$(find xacro)/xacro $(find polyorbite_rover)/urdf/rover1.urdf.xacro" />
 </launch>
