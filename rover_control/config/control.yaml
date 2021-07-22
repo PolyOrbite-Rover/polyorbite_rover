@@ -10,30 +10,9 @@ rover_velocity_controller:
 
   publish_rate: 50
 
+  wheel_separation: 1.1
+
   pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
   twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
-  
-  cmd_vel_timeout: 0.25
-  velocity_rolling_window_size: 2
 
   base_frame_id: base_link
-
-  enable_odom_tf: false
-
-  estimate_velocity_from_position: false
-
-  wheel_separation_multiplier: 1.875
-  wheel_radius_multiplier: 1.0
-
-  linear:
-    x:
-      has_velocity_limits    : true
-      max_velocity           : 1.0
-      has_acceleration_limits: true
-      max_acceleration       : 3.0
-  angular:
-    z:
-      has_velocity_limits    : true
-      max_velocity           : 2.0
-      has_acceleration_limits: true
-      max_acceleration       : 6.0
