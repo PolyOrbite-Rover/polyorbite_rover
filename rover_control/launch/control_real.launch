@@ -11,4 +11,8 @@
           args="rover_joint_publisher rover_velocity_controller" />
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+        <param name="default_topic" value="/rover_velocity_controller/cmd_vel"/>
+    </node>
 </launch>
