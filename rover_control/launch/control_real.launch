@@ -3,6 +3,8 @@
 <launch>
     <include file="$(find polyorbite_rover_control)/launch/description.launch" />
 
+    <node name="rover_node" pkg="polyorbite_rover_control" type="rover_node" />
+
     <rosparam command="load" file="$(find polyorbite_rover_control)/config/control.yaml" />
 
     <node name="controller_spawner" pkg="controller_manager" type="spawner"
