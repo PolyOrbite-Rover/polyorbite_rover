@@ -39,19 +39,19 @@ include_directories(
 )
 
 add_executable(odom src/odom.cpp)
-add_executable(hardware_interface
-  src/hardware_interface_node.cpp
-  src/new_hardware_interface.cpp
+add_executable(rover_node
+  src/rover_base.cpp
+  src/rover_hardware.cpp
 )
 
 target_link_libraries(odom ${catkin_LIBRARIES})
-target_link_libraries(hardware_interface ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(rover_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 #############
 ## Install ##
 #############
 
 install(
-  DIRECTORY launch rviz urdf
+  DIRECTORY launch rviz urdf rover_node
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
