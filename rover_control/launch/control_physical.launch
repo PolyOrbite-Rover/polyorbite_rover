@@ -1,40 +1,18 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
+
 <launch>
-  <param name="robot_description"
-         command="$(find xacro)/xacro --inorder '$(find polyorbite_rover)/urdf/rover1.urdf.xacro'" />
+    <include file="$(find polyorbite_rover_control)/launch/description.launch" />
 
-  <node name="hardware_interface"
-        type="hardware_interface"
-        pkg="polyorbite_rover"
-        ns="rover_diff_drive_controller" />
+    <node name="rover_node" pkg="polyorbite_rover_control" type="rover_node" />
 
-  <!-- Système de localisation -->
-  <include file="$(find polyorbite_rover)/launch/robot_localization_ekf.launch">
-  </include>
-  
-  <!-- Contrôleur des roues -->
-  <rosparam command="load"
-            file="$(find polyorbite_rover)/config/joints.yaml"
-            ns="rover_joint_state_controller" />
-  <rosparam command="load"
-            file="$(find polyorbite_rover)/config/diffdrive.yaml"
-            ns="rover_diff_drive_controller" />
+    <rosparam command="load" file="$(find polyorbite_rover_control)/config/control.yaml" />
 
-  <!-- Spawn les contrôleurs -->
-  <node name="controller_spawner"
-        pkg="controller_manager"
-        type="spawner"
-        args="rover_joint_state_controller
-              rover_diff_drive_controller"
-        output="screen"/>
-  
-  <!-- Contrôleur des roues gui-->
-  <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
-    <param name="default_topic" value="/rover_diff_drive_controller/cmd_vel"/>
-  </node>
+    <node name="controller_spawner" pkg="controller_manager" type="spawner"
+          args="rover_joint_publisher rover_velocity_controller" />
 
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
-  <!-- Rotation et transformation des deux caméras -->
-  <node pkg="tf2_ros" type="static_transform_publisher" name="left_cam_rotation" args="0 0 0 0.5 -0.5  0.5  -0.5 camera_left_link left_cam_rotated" />
-  <node pkg="tf2_ros" type="static_transform_publisher" name="right_cam_rotation" args="0 0 0 0.5 -0.5  0.5  -0.5 camera_right_link right_cam_rotated" />
+    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+        <param name="default_topic" value="/rover_velocity_controller/cmd_vel"/>
+    </node>
 </launch>
