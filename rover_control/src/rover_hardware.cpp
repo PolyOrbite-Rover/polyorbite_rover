@@ -4,7 +4,7 @@
 namespace
 {
     const uint8_t LEFT  = 0;
-    const uint8_t RIGHT = 1;
+    const uint8_t RIGHT = 3;
 };
 
 namespace polyorbite_rover
@@ -62,13 +62,11 @@ namespace polyorbite_rover
         double leftVelocityPercent = angularToPercent(joints[LEFT].velocityCommand);
         double rightVelocityPercent = angularToPercent(joints[RIGHT].velocityCommand);
 
-        ROS_INFO("Test");
-        ROS_INFO(std::to_string(joints[LEFT].velocityCommand).c_str());
-        ROS_INFO(std::to_string(joints[RIGHT].velocityCommand).c_str());
-        ROS_INFO(std::to_string(25.23).c_str());
-        if(joints[LEFT].velocityCommand == 0.0) {
-            ROS_INFO("The left wheel is really not moving");
-        }
+        ROS_INFO(
+            "Left: %f | Right: %f",
+            joints[LEFT].velocityCommand,
+            joints[RIGHT].velocityCommand
+        );
     }
 
     double RoverHardware::angularToPercent(const double& travel) const
