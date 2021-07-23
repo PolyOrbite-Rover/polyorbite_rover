@@ -20,4 +20,6 @@
     <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
         <param name="default_topic" value="/rover_velocity_controller/cmd_vel"/>
     </node>
+
+    <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" />
 </launch>
