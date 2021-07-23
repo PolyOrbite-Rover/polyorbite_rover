@@ -1,0 +1,18 @@
+rover_joint_publisher:
+  type: "joint_state_controller/JointStateController"
+  publish_rate: 50
+
+rover_velocity_controller:
+  type: "diff_drive_controller/DiffDriveController"
+  
+  left_wheel: ['left_front_wheel_joint','left_middle_wheel_joint', 'left_back_wheel_joint']
+  right_wheel: ['right_front_wheel_joint', 'right_middle_wheel_joint', 'right_back_wheel_joint']
+
+  publish_rate: 50
+
+  wheel_separation: 1.1
+
+  pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+  twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+
+  base_frame_id: base_link

@@ -1,9 +1,7 @@
 type: "diff_drive_controller/DiffDriveController"
 publish_rate: 50
 
-
-
-left_wheel: ['left_front_wheel_joint','left_middle_wheel_joint', 'left_back_wheel_joint']
+left_wheel: ['left_front_wheel_joint', 'left_middle_wheel_joint', 'left_back_wheel_joint']
 right_wheel: ['right_front_wheel_joint', 'right_middle_wheel_joint', 'right_back_wheel_joint']
 
 wheel_separation: 1.1
@@ -23,7 +21,7 @@ enable_odom_tf: false
 linear:
   x:
     has_velocity_limits    : true
-    max_velocity           : 1   # m/s
+    max_velocity           : 0.2   # m/s
     has_acceleration_limits: true
     max_acceleration       : 0.6   # m/s^2
 angular:
@@ -32,12 +30,3 @@ angular:
     max_velocity           : 2.0   # rad/s
     has_acceleration_limits: true
     max_acceleration       : 6.0   # rad/s^2
-
-/gazebo_ros_control/pid_gains:
-      left_front_wheel_joint: {p: 1.0, i: 0.0, d: 1.0}
-      left_middle_wheel_joint: {p: 1.0, i: 0.0, d: 1.0}
-      left_back_wheel_joint: {p: 1.0, i: 0.0, d: 1.0}
-      right_front_wheel_joint: {p: 1.0, i: 0.0, d: 1.0}
-      right_middle_wheel_joint: {p: 1.0, i: 0.0, d: 1.0}
-      right_back_wheel_joint: {p: 1.0, i: 0.0, d: 1.0}
-
