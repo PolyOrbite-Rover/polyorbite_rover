@@ -17,6 +17,8 @@ namespace polyorbite_rover
         privateHandle.param<double>("max_acceleration", maximumAcceleration, 5.0);
         privateHandle.param<double>("max_velocity", maximumVelocity, 10.0);
 
+        driveTrainStatePublisher = handle.advertise<std_msgs::Float32MultiArray>("drive_train_state", 10);
+
         registerControlInterfaces();
     }
 
@@ -67,6 +69,15 @@ namespace polyorbite_rover
             joints[LEFT].velocityCommand,
             joints[RIGHT].velocityCommand
         );
+
+        std_msgs::Float32MultiArray message;
+
+        for(auto joint : joints)
+        {
+            message.data.push_back(joint.velocityCommand);
+        }
+
+        driveTrainStatePublisher.publish(message);
     }
 
     double RoverHardware::angularToPercent(const double& travel) const

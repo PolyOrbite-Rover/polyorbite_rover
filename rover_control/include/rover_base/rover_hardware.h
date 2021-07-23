@@ -5,6 +5,8 @@
 #include "hardware_interface/robot_hw.h"
 #include "ros/ros.h"
 
+#include "std_msgs/Float32MultiArray.h"
+
 #include <string>
 
 namespace polyorbite_rover
@@ -25,6 +27,8 @@ namespace polyorbite_rover
 
     private:
         ros::NodeHandle handle, privateHandle;
+
+        ros::Publisher driveTrainStatePublisher;
 
         hardware_interface::JointStateInterface jointStateInterface;
         hardware_interface::VelocityJointInterface velocityJointInterface;
