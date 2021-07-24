@@ -3,11 +3,11 @@
 #include <opencv2/aruco.hpp>
 #include "../../../../devel/include/polyorbite_rover/Code.h"
 
-#define NODE_NAME        "codes_listener"
-#define ARUCO_TOPIC      "aruco"
-#define ARUCO_IMG_SIZE   50
-#define CAMERA_TOPIC     "stereo_camera/right/image_raw/compressed"
-#define RATE             5000   // 5 sec
+#define NODE_NAME            "codes_listener"
+#define ARUCO_TOPIC          "/aruco"
+#define ARUCO_IMG_SIZE       50
+#define CAMERA_LEFT_TOPIC    "/zed2/zed_node/left/image_rect_gray"
+#define RATE                 5000   // 5 sec
 
 ros::Subscriber sub;
 ros::Publisher pub_a;
@@ -57,7 +57,7 @@ ArucoResult arucoRead(cv_bridge::CvImageConstPtr cv_ptr)
     return code;
 }
 
-cv_bridge::CvImageConstPtr transformROSImgToCVImg(const sensor_msgs::CompressedImage::ConstPtr& msg)
+cv_bridge::CvImageConstPtr transformROSImgToCVImg(const sensor_msgs::Image::ConstPtr& msg)
 {
   const sensor_msgs::ImageConstPtr& const_img = (const sensor_msgs::ImageConstPtr&)msg;
   cv_bridge::CvImageConstPtr cv_img_ptr;
@@ -91,7 +91,7 @@ void lookForCodes(cv_bridge::CvImageConstPtr cam_img_ptr)
  * Called when : a frame is captured by the Zed camera
  * Returns : nothing
  */
-void frameCallback(const sensor_msgs::CompressedImage::ConstPtr& msg)
+void frameCallback(const sensor_msgs::Image::ConstPtr& msg)
 {
   cv_bridge::CvImageConstPtr cv_img_ptr;
   cv_img_ptr = transformROSImgToCVImg(msg);
@@ -108,7 +108,7 @@ int main(int argc, char **argv)
   // Node initialisation
   ros::init(argc, argv, NODE_NAME);
   ros::NodeHandle n;
-  ros::Subscriber sub = n.subscribe(CAMERA_TOPIC, 1000, frameCallback); // subscribes to the Zed camera topic
+  ros::Subscriber sub = n.subscribe(CAMERA_LEFT_TOPIC, 1000, frameCallback); // subscribes to the Zed camera topic
   ros::Publisher pub_a = n.advertise<polyorbite_rover::Code>(ARUCO_TOPIC, 1000); // publishes Aruco codes in aruco topic
   arucoInit();
   ros::Rate r(RATE);
