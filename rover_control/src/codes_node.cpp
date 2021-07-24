@@ -1,19 +1,16 @@
 #include <ros/ros.h>
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/aruco.hpp>
-//#include <opencv2/objdetect.hpp>      // oops, requires OpenCV4
 #include "../../../../devel/include/polyorbite_rover/Code.h"
 
 #define NODE_NAME        "codes_listener"
 #define ARUCO_TOPIC      "aruco"
 #define ARUCO_IMG_SIZE   50
-//#define QR_TOPIC         "qr"
 #define CAMERA_TOPIC     "stereo_camera/right/image_raw/compressed"
 #define RATE             5000   // 5 sec
 
 ros::Subscriber sub;
 ros::Publisher pub_a;
-//ros::Publisher pub_q;
 cv::Ptr<cv::aruco::Dictionary> dictionary;
 
 struct ArucoResult {
@@ -113,9 +110,7 @@ int main(int argc, char **argv)
   ros::NodeHandle n;
   ros::Subscriber sub = n.subscribe(CAMERA_TOPIC, 1000, frameCallback); // subscribes to the Zed camera topic
   ros::Publisher pub_a = n.advertise<polyorbite_rover::Code>(ARUCO_TOPIC, 1000); // publishes Aruco codes in aruco topic
-  //ros::Publisher pub_q = n.advertise<polyorbite_rover::Code>(QR_TOPIC, 1000); // publishes QR codes in qr topic
   arucoInit();
-  //qrInit();
   ros::Rate r(RATE);
 
   // Node loop
