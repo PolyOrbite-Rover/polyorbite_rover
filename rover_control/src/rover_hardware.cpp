@@ -65,9 +65,21 @@ namespace polyorbite_rover
         double rightVelocityPercent = angularToPercent(joints[RIGHT].velocityCommand);
 
         ROS_INFO(
-            "Left: %f | Right: %f",
-            joints[LEFT].velocityCommand,
-            joints[RIGHT].velocityCommand
+            "Left front: %f | Right front: %f",
+            joints[0].velocityCommand,
+            joints[3].velocityCommand
+        );
+
+        ROS_INFO(
+            "Left middle: %f | Right middle: %f",
+            joints[1].velocityCommand,
+            joints[4].velocityCommand
+        );
+
+	ROS_INFO(
+            "Left rear: %f | Right rear: %f",
+            joints[2].velocityCommand,
+            joints[5].velocityCommand
         );
 
         std_msgs::Float32MultiArray message;
