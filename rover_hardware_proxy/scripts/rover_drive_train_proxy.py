@@ -41,10 +41,12 @@ def changeWheelVelocities(velocities):
     pwmPublisher.publish(message)
 
 def changeWheelDirections(directions):
-    for i in range(len(directions)):
-        pin = DIRECTION_PINS.values()[i]
-        direction = directions[i]
-        GPIO.output(pin, direction)
+    GPIO.output(DIRECTION_PINS.values()[0], not directions[0])
+    GPIO.output(DIRECTION_PINS.values()[1], not directions[0])
+    GPIO.output(DIRECTION_PINS.values()[2], not directions[0])
+    GPIO.output(DIRECTION_PINS.values()[3], directions[3])
+    GPIO.output(DIRECTION_PINS.values()[4], directions[3])
+    GPIO.output(DIRECTION_PINS.values()[5], directions[3])
 
 def initialize_gpio():
     GPIO.setwarnings(False)
