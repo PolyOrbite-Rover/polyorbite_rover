@@ -18,12 +18,12 @@ namespace polyorbite_rover
         privateHandle.param<double>("max_velocity", maximumVelocity, 10.0);
 
         driveTrainStatePublisher = handle.advertise<std_msgs::Float32MultiArray>("drive_train_state", 10);
-        driveTrainStateSubscriber = handle.subscribe("/velocity", 1000, encoderSignalCallback);
+        driveTrainStateSubscriber = handle.subscribe("/velocity", 1000, &RoverHardware::encoderSignalCallback, this);
 
         registerControlInterfaces();
     }
 
-    void RoverHardware::encoderSignalCallback()
+    void RoverHardware::encoderSignalCallback(const std_msgs::Float32MultiArray::ConstPtr& message)
     {
         // Stores the velocity values in a Variable
         

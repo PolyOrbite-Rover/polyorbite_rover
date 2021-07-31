@@ -22,7 +22,7 @@ namespace polyorbite_rover
     private:
         void initializeDiagnostics();
         void registerControlInterfaces();
-        void encoderSignalCallback();
+        void encoderSignalCallback(const std_msgs::Float32MultiArray::ConstPtr& message);
 
         double angularToPercent(const double& travel) const;
 
@@ -30,6 +30,7 @@ namespace polyorbite_rover
         ros::NodeHandle handle, privateHandle;
 
         ros::Publisher driveTrainStatePublisher;
+        ros::Subscriber driveTrainStateSubscriber;
 
         hardware_interface::JointStateInterface jointStateInterface;
         hardware_interface::VelocityJointInterface velocityJointInterface;
