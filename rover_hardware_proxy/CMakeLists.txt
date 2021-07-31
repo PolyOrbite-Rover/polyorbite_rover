@@ -27,7 +27,6 @@ include_directories(
 )
 
 catkin_install_python(
-  PROGRAMS scripts/rover_drive_train_proxy.py
-  PROGRAMS scripts/rover_speed_encoder.py
+  PROGRAMS scripts/rover_drive_train_proxy.py scripts/rover_speed_encoder.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
