@@ -9,7 +9,7 @@ import RPi.GPIO as GPIO
 DIRECTION_PINS = {
     "front_left"    : 40,
     "middle_left"   : 38,
-    "rear_left"     : 36,
+    "rear_left"     : 31,
     "front_right"   : 37,
     "middle_right"  : 35,
     "rear_right"    : 33
