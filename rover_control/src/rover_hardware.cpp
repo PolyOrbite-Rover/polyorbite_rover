@@ -18,8 +18,16 @@ namespace polyorbite_rover
         privateHandle.param<double>("max_velocity", maximumVelocity, 10.0);
 
         driveTrainStatePublisher = handle.advertise<std_msgs::Float32MultiArray>("drive_train_state", 10);
+        driveTrainStateSubscriber = handle.subscribe("/velocity", 1000, encoderSignalCallback);
 
         registerControlInterfaces();
+    }
+
+    void RoverHardware::encoderSignalCallback()
+    {
+        // Stores the velocity values in a Variable
+        
+
     }
 
     void RoverHardware::registerControlInterfaces()
@@ -54,9 +62,10 @@ namespace polyorbite_rover
         registerInterface(&velocityJointInterface);
     }
 
-    void RoverHardware::updateJointsFromHardware()
+    void RoverHardware::updateJointsFromHardware()  // callback function?
     {
         // TODO: Read joint feedback from hardware
+
     }
 
     void RoverHardware::writeCommandsToHardware()

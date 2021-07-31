@@ -22,6 +22,7 @@ namespace polyorbite_rover
     private:
         void initializeDiagnostics();
         void registerControlInterfaces();
+        void encoderSignalCallback();
 
         double angularToPercent(const double& travel) const;
 

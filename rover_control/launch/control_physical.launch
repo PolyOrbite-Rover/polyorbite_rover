@@ -3,12 +3,12 @@
 <launch>
     <include file="$(find polyorbite_rover)/launch/description.launch" />
 
-    <node name="rover_node" pkg="polyorbite_rover" type="rover_node" />
-    <node name="rover_drive_train_proxy" pkg="rover_hardware_proxy" type="rover_drive_train_proxy.py" />
+    <node name="rover_node" pkg="polyorbite_rover" type="rover_node" output="screen" />
+    <!--node name="rover_drive_train_proxy" pkg="rover_hardware_proxy" type="rover_drive_train_proxy.py" /-->
 
-    <node name="pca9685_node" pkg="pwm_pca9685" type="pca9685_node">
+    <!--<node name="pca9685_node" pkg="pwm_pca9685" type="pca9685_node">
         <param name="device" value="/dev/i2c-8" />
-    </node>
+    </node>-->
 
     <rosparam command="load" file="$(find polyorbite_rover)/config/control.yaml" />
 
