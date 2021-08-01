@@ -12,6 +12,9 @@
         <param name="device" value="/dev/i2c-1" />
     </node>
 
+    <!-- Localization system -->
+    <include file="$(find polyorbite_rover)/launch/robot_localization_ekf.launch" />
+
     <!-- Differenctial drive controller -->
     <rosparam command="load" file="$(find polyorbite_rover)/config/control.yaml" />
 
