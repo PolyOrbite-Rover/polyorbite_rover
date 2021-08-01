@@ -2,9 +2,12 @@
 
 <launch>
     <include file="$(find polyorbite_rover)/launch/description.launch" />
-    <include file="$(find zed_wrapper)/launch/zed2.launch" />
 
-    <!-- Interfaces with physical hardware -->
+    <!-- Interface with cameras -->
+    <include file="$(find zed_wrapper)/launch/zed2.launch" output="screen" />
+    <node name="usb_cam_node" pkg="usb_cam" type="usb_cam_node" output="log" />
+
+    <!-- Interface with physical hardware -->
     <node name="rover_node" pkg="polyorbite_rover" type="rover_node" />
     <node name="rover_drive_train_proxy" pkg="rover_hardware_proxy" type="rover_drive_train_proxy.py" />
 
@@ -15,7 +18,7 @@
     <!-- Localization system -->
     <include file="$(find polyorbite_rover)/launch/robot_localization_ekf.launch" />
 
-    <!-- Differenctial drive controller -->
+    <!-- Differential drive controller -->
     <rosparam command="load" file="$(find polyorbite_rover)/config/control.yaml" />
 
     <node name="controller_spawner" pkg="controller_manager" type="spawner"
@@ -23,7 +26,7 @@
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
-    <!-- Interfaces with ground station -->
+    <!-- Interface with ground station -->
     <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" />
     <node name="web_video_server" pkg="web_video_server" type="web_video_server" />
 
