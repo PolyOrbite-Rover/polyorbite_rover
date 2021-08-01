@@ -79,8 +79,6 @@ def checkDirection(A_UP, B_UP):
     elif (A_UP == 0) and (B_UP == 0):
         FORWARD = 1
 
-    print("Is forward: %s" % FORWARD)
-
     return FORWARD
 
 def main():
