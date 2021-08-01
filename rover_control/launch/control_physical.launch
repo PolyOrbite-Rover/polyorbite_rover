@@ -25,6 +25,7 @@
 
     <!-- Interfaces with ground station -->
     <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" />
+    <node name="web_video_server" pkg="web_video_server" type="web_video_server" />
 
     <!-- Debug tools -->
     <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
