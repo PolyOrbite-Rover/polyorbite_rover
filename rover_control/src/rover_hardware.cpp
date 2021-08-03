@@ -85,7 +85,7 @@ namespace polyorbite_rover
             joints[4].velocityCommand
         );
 
-	ROS_INFO(
+	    ROS_INFO(
             "Left rear: %f | Right rear: %f",
             joints[2].velocityCommand,
             joints[5].velocityCommand
