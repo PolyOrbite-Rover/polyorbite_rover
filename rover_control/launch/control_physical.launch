@@ -4,8 +4,8 @@
     <include file="$(find polyorbite_rover)/launch/description.launch" />
 
     <!-- Interface with cameras -->
-    <include file="$(find zed_wrapper)/launch/zed2.launch" output="screen" />
-    <node name="usb_cam_node" pkg="usb_cam" type="usb_cam_node" output="log" />
+    <include file="$(find zed_wrapper)/launch/zed2.launch" />
+    <node name="usb_cam_node" pkg="usb_cam" type="usb_cam_node" />
 
     <!-- Interface with physical hardware -->
     <node name="rover_node" pkg="polyorbite_rover" type="rover_node" />
