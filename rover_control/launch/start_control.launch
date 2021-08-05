@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<launch>
+    <include file="$(find polyorbite_rover)/launch/description.launch" />
+
+    <!-- Interface with cameras -->
+    <include file="$(find zed_wrapper)/launch/zed2.launch" />
+    <!--<node name="usb_cam_node" pkg="usb_cam" type="usb_cam_node" />-->
+
+    <!-- Interface with physical hardware -->
+    <node name="rover_node" pkg="polyorbite_rover" type="rover_node"  output="screen" />
+    <node name="rover_drive_train_proxy" pkg="rover_hardware_proxy" type="rover_drive_train_proxy.py" />
+
+    <node name="pca9685_node" pkg="pwm_pca9685" type="pca9685_node">
+        <param name="device" value="/dev/i2c-1" />
+    </node>
+    
+    <!-- Differential drive controller -->
+    <rosparam command="load" file="$(find polyorbite_rover)/config/control.yaml" />
+
+    <node name="controller_spawner" pkg="controller_manager" type="spawner"
+          args="rover_joint_publisher rover_velocity_controller" />
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <!-- Interface with ground station -->
+    <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" />
+    <node name="web_video_server" pkg="web_video_server" type="web_video_server" />
+
+    <!-- Debug tools -->
+    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+        <param name="default_topic" value="/rover_velocity_controller/cmd_vel"/>
+    </node>
+
+    <!-- Transform of the two cameras -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="left_cam_rotation" args="0 0 0 0.5 -0.5  0.5  -0.5 camera_left_link left_cam_rotated" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="right_cam_rotation" args="0 0 0 0.5 -0.5  0.5  -0.5 camera_right_link right_cam_rotated" />
+
+</launch>

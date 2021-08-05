@@ -1,0 +1,16 @@
+<launch>
+
+    <include file="$(find polyorbite_rover)/launch/start_control.launch" />
+
+    <include file="$(find polyorbite_rover)/launch/start_navsat.launch" />
+
+    <!-- Run the ekf for map to odom config -->
+    <include file="$(find polyorbite_rover)/launch/ekf_localization.launch" />
+
+    <!-- Run the map server -->
+    <include file="$(find polyorbite_rover)/launch/start_map_server.launch" />
+
+    <!--- Run Move Base -->
+    <include file="$(find polyorbite_rover)/launch/move_base_physical.launch" />
+
+</launch>
