@@ -16,7 +16,7 @@
     </node>
 
     <!-- Localization system -->
-    <include file="$(find polyorbite_rover)/launch/robot_localization_ekf.launch" />
+    <include file="$(find polyorbite_rover)/launch/robot_localization_ekf_physical.launch" />
 
     <!-- Differential drive controller -->
     <rosparam command="load" file="$(find polyorbite_rover)/config/control.yaml" />
