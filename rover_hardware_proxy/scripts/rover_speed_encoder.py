@@ -23,8 +23,8 @@ VELOCITY_PINS = {
         "B": 19
     },
     "front_right": {
-        "_A": 18,
-        "_B": 16
+        "A": 18,
+        "B": 16
     },
     "middle_right": {
         "A": 15,
@@ -95,11 +95,9 @@ class EncodingPublisher(Thread):
         self.time_history = []
         self.forward = []
 
-        print(velocity_message.data)
-
         self.schedule_next_publication()
 
-    def update(front_leftpin_A, pin_B):
+    def update(self, pin_A, pin_B):
         # To reset the states when the signal turn off
         if GPIO.input(pin_A) and (self.STATE_A == 1):
             self.STATE_A = 0
@@ -113,15 +111,14 @@ class EncodingPublisher(Thread):
             self.STATE_A = 1
             self.A_UP = 1
             FORWARD = checkDirection(self.A_UP, self.B_UP)
-            encodingHandler.time_history.append(time.time())
+            self.time_history.append(time.time())
             if FORWARD:
-                encodingHandler.forward.append(1)
+                self.forward.append(1)
             else:
-                encodingHandler.forward.append(-1)
+                self.forward.append(-1)
         elif (GPIO.input(pin_B) == False) and (self.STATE_B == 0):
             self.STATE_B = 1
-    rospy.init_node('rover_velocity_encod
-
+            self.B_UP = 1
 
 def initialize_gpio():
     """
@@ -129,8 +126,9 @@ def initialize_gpio():
     """
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BOARD)
-    for pin in VELOCITY_PINS.values():
-        GPIO.setup(pin, GPIO.IN)
+    for pin_group in VELOCITY_PINS.values():
+        for pin in pin_group.values():
+            GPIO.setup(pin, GPIO.IN)
 
 def main():
     initialize_gpio()
@@ -138,14 +136,13 @@ def main():
     rospy.init_node('rover_velocity_encoder', anonymous=True)
 
     # Publisher to publish the encoder velocity values
-    encodingHandler = EncodingPublisher('/velocity')
     encodingHandlers = {
-        "front_left": EncodingPublisher('/velocity'),
-        "middle_left": EncodingPublisher('/velocity'),
-        "rear_left": EncodingPublisher('/velocity'),
-        "front_right": EncodingPublisher('/velocity'),
-        "middle_right": EncodingPublisher('/velocity'),
-        "rear_right": EncodingPublisher('/velocity')
+        "front_left": EncodingPublisher('/velocity/front/left'),
+        "middle_left": EncodingPublisher('/velocity/middle/left'),
+        "rear_left": EncodingPublisher('/velocity/rear/left'),
+        "front_right": EncodingPublisher('/velocity/front/right'),
+        "middle_right": EncodingPublisher('/velocity/middle/right'),
+        "rear_right": EncodingPublisher('/velocity/rear/right')
     }
 
     while not rospy.is_shutdown():
