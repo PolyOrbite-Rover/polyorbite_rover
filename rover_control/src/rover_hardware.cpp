@@ -26,7 +26,29 @@ namespace polyorbite_rover
     void RoverHardware::encoderSignalCallback(const std_msgs::Float32MultiArray::ConstPtr& message)
     {
         // Stores the velocity values in a Variable
-        
+        for (int n : message)
+        {
+            joints[n].velocity = message[n];
+        }
+
+        // Print out the velocity values
+        ROS_INFO(
+            "Left front: %f | Right front: %f",
+            joints[0].velocity,
+            joints[3].velocity
+        );
+
+        ROS_INFO(
+            "Left middle: %f | Right middle: %f",
+            joints[1].velocity,
+            joints[4].velocity
+        );
+
+	      ROS_INFO(
+            "Left rear: %f | Right rear: %f",
+            joints[2].velocity,
+            joints[5].velocity
+        );
 
     }
 
@@ -85,7 +107,7 @@ namespace polyorbite_rover
             joints[4].velocityCommand
         );
 
-	    ROS_INFO(
+	      ROS_INFO(
             "Left rear: %f | Right rear: %f",
             joints[2].velocityCommand,
             joints[5].velocityCommand

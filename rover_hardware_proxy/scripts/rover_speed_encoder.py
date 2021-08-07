@@ -74,7 +74,7 @@ class EncodingPublisher(Thread):
         timer = threading.Timer(self.publish_interval, self.publish_velocity)
         timer.daemon = True
         timer.start()
-    
+
     def publish_velocity(self):
         velocity_message = Float32MultiArray()
 
@@ -87,7 +87,7 @@ class EncodingPublisher(Thread):
                 if delta_time_sec == 0:
                     continue
                 derivative.append(self.forward[i+1] * 2 * (np.pi / 180) / delta_time_sec)
-            
+
             velocity_message.data.append(len(derivative) == 0 if 0 else sum(derivative) / len(derivative))
 
         # Publish the velocity array into the topic
@@ -120,7 +120,7 @@ class EncodingPublisher(Thread):
                 encodingHandler.forward.append(-1)
         elif (GPIO.input(pin_B) == False) and (self.STATE_B == 0):
             self.STATE_B = 1
-    rospy.init_node('rover_velocity_encod
+    #rospy.init_node('rover_velocity_encod
 
 
 def initialize_gpio():
@@ -179,7 +179,7 @@ def main():
             VELOCITY_PINS['rear_right']['A'],
             VELOCITY_PINS['rear_right']['B']
         )
-        
+
 
 if __name__ == '__main__':
     try:
