@@ -3,6 +3,9 @@
 <launch>
     <include file="$(find polyorbite_rover)/launch/description.launch" />
 
+    <!-- ROBOTIC ARM -->
+    <include file="$(find sixi_robot)/launch/sixi_competition.launch" />
+
     <node name="rover_node" pkg="polyorbite_rover" type="rover_node" />
     <node name="rover_drive_train_proxy" pkg="rover_hardware_proxy" type="rover_drive_train_proxy.py" />
 
