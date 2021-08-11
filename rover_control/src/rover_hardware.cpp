@@ -26,9 +26,9 @@ namespace polyorbite_rover
     void RoverHardware::encoderSignalCallback(const std_msgs::Float32MultiArray::ConstPtr& message)
     {
         // Stores the velocity values in a Variable
-        for (int n : message)
+        for (int n : message->data)
         {
-            joints[n].velocity = message[n];
+            joints[n].velocity = message->data[n];
         }
 
         // Print out the velocity values
