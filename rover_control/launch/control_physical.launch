@@ -4,8 +4,7 @@
     <include file="$(find polyorbite_rover)/launch/description.launch" />
 
     <!-- Interface with cameras -->
-    <include file="$(find zed_wrapper)/launch/zed2.launch" />
-    <node name="usb_cam_node" pkg="usb_cam" type="usb_cam_node" />
+    <include file="$(find polyorbite_rover)/launch/cameras.launch" />
 
     <!-- Interface with physical hardware -->
     <node name="rover_node" pkg="polyorbite_rover" type="rover_node" />
@@ -16,7 +15,9 @@
     </node>
 
     <!-- Localization system -->
-    <include file="$(find polyorbite_rover)/launch/robot_localization_ekf.launch" />
+    <node pkg="ublox_gps" type="ublox_gps" name="ublox_gps">
+      <remap from="/ublox_gps/fix" to="/gps/fix" />
+    </node>
 
     <!-- Differential drive controller -->
     <rosparam command="load" file="$(find polyorbite_rover)/config/control.yaml" />
