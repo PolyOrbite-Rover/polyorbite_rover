@@ -6,6 +6,7 @@
 #include "ros/ros.h"
 
 #include "std_msgs/Float32MultiArray.h"
+#include "std_msgs/Float64.h"
 
 #include <string>
 
@@ -28,6 +29,15 @@ namespace polyorbite_rover
 
     private:
         ros::NodeHandle handle, privateHandle;
+
+        ros::Publisher motorFLPublisher;
+        ros::Publisher motorFRPublisher;
+        
+        ros::Publisher motorCLPublisher;
+        ros::Publisher motorCRPublisher;
+
+        ros::Publisher motorRLPublisher;
+        ros::Publisher motorRRPublisher;
 
         ros::Publisher driveTrainStatePublisher;
         ros::Subscriber driveTrainStateSubscriber;

@@ -17,6 +17,15 @@ namespace polyorbite_rover
         privateHandle.param<double>("max_acceleration", maximumAcceleration, 5.0);
         privateHandle.param<double>("max_velocity", maximumVelocity, 10.0);
 
+        motorFLPublisher = handle.advertise<std_msgs::Float64>("FL_velocity", 10);
+        motorFRPublisher = handle.advertise<std_msgs::Float64>("FR_velocity", 10);
+
+        motorCLPublisher = handle.advertise<std_msgs::Float64>("CL_velocity", 10);
+        motorCRPublisher = handle.advertise<std_msgs::Float64>("CR_velocity", 10);
+
+        motorRLPublisher = handle.advertise<std_msgs::Float64>("RL_velocity", 10);
+        motorRRPublisher = handle.advertise<std_msgs::Float64>("RR_velocity", 10);
+
         driveTrainStatePublisher = handle.advertise<std_msgs::Float32MultiArray>("drive_train_state", 10);
         driveTrainStateSubscriber = handle.subscribe("/velocity", 1000, &RoverHardware::encoderSignalCallback, this);
 
@@ -121,6 +130,30 @@ namespace polyorbite_rover
         }
 
         driveTrainStatePublisher.publish(message);
+
+        std_msgs::Float64 velocityFLmessage;
+        velocityFLmessage.data = (float)joints[LEFT].velocityCommand;
+        motorFLPublisher.publish(velocityFLmessage);
+
+        std_msgs::Float64 velocityFRmessage;
+        velocityFRmessage.data = (float)joints[RIGHT].velocityCommand;
+        motorFRPublisher.publish(velocityFRmessage);
+
+        std_msgs::Float64 velocityCLmessage;
+        velocityCLmessage.data = (float)joints[LEFT].velocityCommand;
+        motorCLPublisher.publish(velocityCLmessage);
+
+        std_msgs::Float64 velocityCRmessage;
+        velocityCRmessage.data = (float)joints[RIGHT].velocityCommand;
+        motorCRPublisher.publish(velocityCRmessage);
+
+        std_msgs::Float64 velocityRLmessage;
+        velocityRLmessage.data = (float)joints[LEFT].velocityCommand;
+        motorRLPublisher.publish(velocityRLmessage);
+
+        std_msgs::Float64 velocityRRmessage;
+        velocityRRmessage.data = (float)joints[RIGHT].velocityCommand;
+        motorRRPublisher.publish(velocityRRmessage);
     }
 
     double RoverHardware::angularToPercent(const double& travel) const
