@@ -30,14 +30,14 @@ namespace polyorbite_rover
         motorRLPublisher = handle.advertise<std_msgs::Float64>("RL_velocity", 10);
         motorRRPublisher = handle.advertise<std_msgs::Float64>("RR_velocity", 10);
 
-        motorFLSubscriber = handle.subscribe("/FL_distance", 1000, &RoverHardware::encoderFLCallback, this);
-        motorFLSubscriber = handle.subscribe("/FR_distance", 1000, &RoverHardware::encoderFRCallback, this);
+        // motorFLSubscriber = handle.subscribe("/FL_distance", 1000, &RoverHardware::encoderFLCallback, this);
+        // motorFLSubscriber = handle.subscribe("/FR_distance", 1000, &RoverHardware::encoderFRCallback, this);
 
-        motorFLSubscriber = handle.subscribe("/CL_distance", 1000, &RoverHardware::encoderCLCallback, this);
-        motorFLSubscriber = handle.subscribe("/CR_distance", 1000, &RoverHardware::encoderCRCallback, this);
+        // motorFLSubscriber = handle.subscribe("/CL_distance", 1000, &RoverHardware::encoderCLCallback, this);
+        // motorFLSubscriber = handle.subscribe("/CR_distance", 1000, &RoverHardware::encoderCRCallback, this);
 
-        motorFLSubscriber = handle.subscribe("/RL_distance", 1000, &RoverHardware::encoderRLCallback, this);
-        motorFLSubscriber = handle.subscribe("/RR_distance", 1000, &RoverHardware::encoderRRCallback, this);
+        // motorFLSubscriber = handle.subscribe("/RL_distance", 1000, &RoverHardware::encoderRLCallback, this);
+        // motorFLSubscriber = handle.subscribe("/RR_distance", 1000, &RoverHardware::encoderRRCallback, this);
 
         driveTrainStatePublisher = handle.advertise<std_msgs::Float32MultiArray>("drive_train_state", 10);
         driveTrainStateSubscriber = handle.subscribe("/velocity", 1000, &RoverHardware::encoderSignalCallback, this);
