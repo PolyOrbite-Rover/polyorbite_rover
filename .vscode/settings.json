@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.bzz": "javascript",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp"
+    }
+}

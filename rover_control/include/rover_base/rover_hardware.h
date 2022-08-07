@@ -9,9 +9,27 @@
 #include "std_msgs/Float64.h"
 
 #include <string>
+#include <chrono>
+
+#define DISTANCE_PER_PULSE 1.570796 // mm
 
 namespace polyorbite_rover
 {
+    struct Joint
+    {
+        std::chrono::milliseconds timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+
+        double position;
+        double positionOffset;
+        double velocity;
+        double effort;
+        double velocityCommand;
+
+        Joint() :
+            position(0), velocity(0), effort(0), velocityCommand(0)
+        {}
+    };
+
     class RoverHardware : public hardware_interface::RobotHW
     {
     public:
@@ -24,6 +42,17 @@ namespace polyorbite_rover
         void initializeDiagnostics();
         void registerControlInterfaces();
         void encoderSignalCallback(const std_msgs::Float32MultiArray::ConstPtr& message);
+
+        void encoderCallback(Joint& joint, const std_msgs::Float64::ConstPtr& message);
+
+        void encoderFLCallback(const std_msgs::Float64::ConstPtr& message);
+        void encoderFRCallback(const std_msgs::Float64::ConstPtr& message);
+
+        void encoderCLCallback(const std_msgs::Float64::ConstPtr& message);
+        void encoderCRCallback(const std_msgs::Float64::ConstPtr& message);
+
+        void encoderRLCallback(const std_msgs::Float64::ConstPtr& message);
+        void encoderRRCallback(const std_msgs::Float64::ConstPtr& message);
 
         double angularToPercent(const double& travel) const;
 
@@ -39,6 +68,15 @@ namespace polyorbite_rover
         ros::Publisher motorRLPublisher;
         ros::Publisher motorRRPublisher;
 
+        ros::Subscriber motorFLSubscriber;
+        ros::Subscriber motorFRSubscriber;
+
+        ros::Subscriber motorCLSubscriber;
+        ros::Subscriber motorCRSubscriber;
+
+        ros::Subscriber motorRLSubscriber;
+        ros::Subscriber motorRRSubscriber;
+
         ros::Publisher driveTrainStatePublisher;
         ros::Subscriber driveTrainStateSubscriber;
 
@@ -50,17 +88,6 @@ namespace polyorbite_rover
         double maximumVelocity;
         double pollingTimeout;
 
-        struct Joint
-        {
-            double position;
-            double positionOffset;
-            double velocity;
-            double effort;
-            double velocityCommand;
-
-            Joint() :
-                position(0), velocity(0), effort(0), velocityCommand(0)
-            {}
-        } joints[6];
+        Joint joints[6];
     };
 }

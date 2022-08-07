@@ -3,8 +3,12 @@
 
 namespace
 {
-    const uint8_t LEFT  = 0;
-    const uint8_t RIGHT = 3;
+    const uint8_t FRONT_LEFT   = 0;
+    const uint8_t FRONT_RIGHT  = 3;
+    const uint8_t CENTER_LEFT  = 1;
+    const uint8_t CENTER_RIGHT = 4;
+    const uint8_t REAR_LEFT    = 2;
+    const uint8_t REAR_RIGHT   = 5;
 };
 
 namespace polyorbite_rover
@@ -25,6 +29,15 @@ namespace polyorbite_rover
 
         motorRLPublisher = handle.advertise<std_msgs::Float64>("RL_velocity", 10);
         motorRRPublisher = handle.advertise<std_msgs::Float64>("RR_velocity", 10);
+
+        motorFLSubscriber = handle.subscribe("/FL_distance", 1000, &RoverHardware::encoderFLCallback, this);
+        motorFLSubscriber = handle.subscribe("/FR_distance", 1000, &RoverHardware::encoderFRCallback, this);
+
+        motorFLSubscriber = handle.subscribe("/CL_distance", 1000, &RoverHardware::encoderCLCallback, this);
+        motorFLSubscriber = handle.subscribe("/CR_distance", 1000, &RoverHardware::encoderCRCallback, this);
+
+        motorFLSubscriber = handle.subscribe("/RL_distance", 1000, &RoverHardware::encoderRLCallback, this);
+        motorFLSubscriber = handle.subscribe("/RR_distance", 1000, &RoverHardware::encoderRRCallback, this);
 
         driveTrainStatePublisher = handle.advertise<std_msgs::Float32MultiArray>("drive_train_state", 10);
         driveTrainStateSubscriber = handle.subscribe("/velocity", 1000, &RoverHardware::encoderSignalCallback, this);
@@ -58,7 +71,53 @@ namespace polyorbite_rover
             joints[2].velocity,
             joints[5].velocity
         );
+    }
 
+    void RoverHardware::encoderCallback(Joint& joint, const std_msgs::Float64::ConstPtr& message)
+    {
+        std::chrono::milliseconds timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+        auto deltaTime = (timestamp - joint.timestamp).count();
+
+        if(deltaTime > 0)
+        {
+            float position = message->data * DISTANCE_PER_PULSE;
+            float deltaPosition = position - joint.position;
+            float velocity = deltaPosition / deltaTime;
+
+            joint.timestamp = timestamp;
+            joint.position = position;
+            joint.velocity = velocity;
+        }
+    }
+
+    void RoverHardware::encoderFLCallback(const std_msgs::Float64::ConstPtr& message)
+    {
+        encoderCallback(joints[FRONT_LEFT], message);
+    }
+
+    void RoverHardware::encoderFRCallback(const std_msgs::Float64::ConstPtr& message)
+    {
+        encoderCallback(joints[FRONT_RIGHT], message);
+    }
+
+    void RoverHardware::encoderCLCallback(const std_msgs::Float64::ConstPtr& message)
+    {
+        encoderCallback(joints[CENTER_LEFT], message);
+    }
+
+    void RoverHardware::encoderCRCallback(const std_msgs::Float64::ConstPtr& message)
+    {
+        encoderCallback(joints[CENTER_RIGHT], message);
+    }
+
+    void RoverHardware::encoderRLCallback(const std_msgs::Float64::ConstPtr& message)
+    {
+        encoderCallback(joints[REAR_LEFT], message);
+    }
+
+    void RoverHardware::encoderRRCallback(const std_msgs::Float64::ConstPtr& message)
+    {
+        encoderCallback(joints[REAR_RIGHT], message);
     }
 
     void RoverHardware::registerControlInterfaces()
@@ -101,9 +160,6 @@ namespace polyorbite_rover
 
     void RoverHardware::writeCommandsToHardware()
     {
-        double leftVelocityPercent = angularToPercent(joints[LEFT].velocityCommand);
-        double rightVelocityPercent = angularToPercent(joints[RIGHT].velocityCommand);
-
         ROS_INFO(
             "Left front: %f | Right front: %f",
             joints[0].velocityCommand,
@@ -132,27 +188,28 @@ namespace polyorbite_rover
         driveTrainStatePublisher.publish(message);
 
         std_msgs::Float64 velocityFLmessage;
-        velocityFLmessage.data = (float)joints[LEFT].velocityCommand;
+        velocityFLmessage.data = (float)joints[FRONT_LEFT].velocityCommand;
         motorFLPublisher.publish(velocityFLmessage);
 
         std_msgs::Float64 velocityFRmessage;
-        velocityFRmessage.data = (float)joints[RIGHT].velocityCommand;
+        velocityFRmessage.data = (float)joints[FRONT_RIGHT].velocityCommand;
         motorFRPublisher.publish(velocityFRmessage);
 
         std_msgs::Float64 velocityCLmessage;
-        velocityCLmessage.data = (float)joints[LEFT].velocityCommand;
+        velocityCLmessage.data = (float)joints[CENTER_LEFT].velocityCommand;
         motorCLPublisher.publish(velocityCLmessage);
 
         std_msgs::Float64 velocityCRmessage;
-        velocityCRmessage.data = (float)joints[RIGHT].velocityCommand;
+        velocityCRmessage.data = (float)joints[CENTER_RIGHT].velocityCommand;
         motorCRPublisher.publish(velocityCRmessage);
 
         std_msgs::Float64 velocityRLmessage;
-        velocityRLmessage.data = (float)joints[LEFT].velocityCommand;
+        velocityRLmessage.data = (float)joints[CENTER_LEFT].velocityCommand;
         motorRLPublisher.publish(velocityRLmessage);
 
         std_msgs::Float64 velocityRRmessage;
-        velocityRRmessage.data = (float)joints[RIGHT].velocityCommand;
+        velocityRRmessage.data = (float)joints[CENTER_RIGHT].velocityCommand;
+
         motorRRPublisher.publish(velocityRRmessage);
     }
 
