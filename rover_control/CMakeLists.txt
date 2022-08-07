@@ -43,8 +43,10 @@ add_executable(rover_node
   src/rover_base.cpp
   src/rover_hardware.cpp
 )
+add_executable(shovel_node src/shovel.cpp)
 
 target_link_libraries(odom ${catkin_LIBRARIES})
+target_link_libraries(shovel_node ${catkin_LIBRARIES})
 target_link_libraries(rover_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 #############
