@@ -17,14 +17,14 @@
     <!--<node name="shovel_node" pkg="polyorbite_rover" type="shovel_node" />
     <node name="rover_shovel_proxy" pkg="rover_hardware_proxy" type="rover_shovel_proxy.py" />-->
 
-    <node name="pca9685_node" pkg="pwm_pca9685" type="pca9685_node">
+    <!-- <node name="pca9685_node" pkg="pwm_pca9685" type="pca9685_node">
         <param name="device" value="/dev/i2c-1" />
-    </node>
+    </node> -->
 
     <!-- Localization system -->
-    <node pkg="ublox_gps" type="ublox_gps" name="ublox_gps">
+    <!-- <node pkg="ublox_gps" type="ublox_gps" name="ublox_gps">
       <remap from="/ublox_gps/fix" to="/gps/fix" />
-    </node>
+    </node> -->
 
     <!-- Differential drive controller -->
     <rosparam command="load" file="$(find polyorbite_rover)/config/control.yaml" />
