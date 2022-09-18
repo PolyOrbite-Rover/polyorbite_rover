@@ -55,7 +55,7 @@ def initialize_gpio():
         GPIO.setup(pin, GPIO.OUT)
 
 def start():
-    initialize_gpio()
+    #initialize_gpio()
     
     rospy.init_node('rover_drive_train_proxy', anonymous=True)
     
