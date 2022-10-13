@@ -27,7 +27,7 @@ def velocityCommandReceived(message):
         velocities.append(abs(velocity))
     
     changeWheelVelocities(velocities)
-    changeWheelDirections(directions)
+    #changeWheelDirections(directions)
 
 def changeWheelVelocities(velocities):
     message = Int32MultiArray()
@@ -40,13 +40,13 @@ def changeWheelVelocities(velocities):
 
     pwmPublisher.publish(message)
 
-def changeWheelDirections(directions):
-    GPIO.output(DIRECTION_PINS.values()[0], not directions[0])
-    GPIO.output(DIRECTION_PINS.values()[1], not directions[0])
-    GPIO.output(DIRECTION_PINS.values()[2], not directions[0])
-    GPIO.output(DIRECTION_PINS.values()[3], directions[3])
-    GPIO.output(DIRECTION_PINS.values()[4], directions[3])
-    GPIO.output(DIRECTION_PINS.values()[5], directions[3])
+#def changeWheelDirections(directions):
+#    GPIO.output(DIRECTION_PINS.values()[0], not directions[0])
+#    GPIO.output(DIRECTION_PINS.values()[1], not directions[0])
+#    GPIO.output(DIRECTION_PINS.values()[2], not directions[0])
+#    GPIO.output(DIRECTION_PINS.values()[3], directions[3])
+#    GPIO.output(DIRECTION_PINS.values()[4], directions[3])
+#    GPIO.output(DIRECTION_PINS.values()[5], directions[3])
 
 def initialize_gpio():
     GPIO.setwarnings(False)
