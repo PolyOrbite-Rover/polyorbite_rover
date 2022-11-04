@@ -10,7 +10,7 @@
     <node name="rover_node" pkg="polyorbite_rover" type="rover_node" />
     <node name="rover_drive_train_proxy" pkg="rover_hardware_proxy" type="rover_drive_train_proxy.py" />
     <node name="arduino_board" pkg="rosserial_arduino" type="serial_node.py">
-	    <param name="port" value="/dev/ttyUSB0" />
+	    <param name="port" value="/dev/ttyACM0" />
         <param name="baud" value="115200" />
     </node>
 
@@ -22,9 +22,9 @@
     </node>
 
     <!-- Localization system -->
-    <node pkg="ublox_gps" type="ublox_gps" name="ublox_gps">
+    <!-- <node pkg="ublox_gps" type="ublox_gps" name="ublox_gps">
       <remap from="/ublox_gps/fix" to="/gps/fix" />
-    </node>
+    </node> -->
 
     <!-- Differential drive controller -->
     <rosparam command="load" file="$(find polyorbite_rover)/config/control.yaml" />
@@ -35,7 +35,11 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
     <!-- Interface with ground station -->
-    <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" />
+  <!--<node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket">
+         <param name="port" value="8080" />
+    </node> -->
+    <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket"/>
+
     <node name="web_video_server" pkg="web_video_server" type="web_video_server" />
 
     <!-- Debug tools -->
